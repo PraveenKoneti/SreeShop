@@ -1,0 +1,154 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+
+
+
+
+.nav-bar{
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; 
+  -ms-overflow-style:none;
+  scrollbar-width: none;
+  padding:8px;
+}
+
+.nav-category{
+  margin-right:12px;
+  font-size:20px;
+  vertical-align: center;
+}
+
+#demo.custom-offcanvas{ margin-top:126px;}
+
+#myModal.custom-modal{ margin-top:200px;}
+
+.displaysingle{
+  height: 500px;
+  overflow: auto;
+  -ms-overflow-style:none;
+  scrollbar-width: none;
+}
+
+.bg-sellernav{
+  background: #ff6e7f;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #bfe9ff, #ff6e7f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #bfe9ff, #ff6e7f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.homesummercool{
+  background-color: rgb(196, 235, 251);
+}
+
+
+body {
+  overflow-x: hidden;
+}
+
+
+.sellernav-dropdown{
+  font-size:20px;
+}
+.scrollable-list{
+  height: 300px;
+  overflow-y: auto;
+}
+
+.brandnames-scroll{
+  height: 410px;
+  overflow: auto;
+  -ms-overflow-style:none;
+  scrollbar-width: none;
+}
+
+
+.cartlist-scroll{
+  height: 570px;
+  overflow: auto;
+  -ms-overflow-style:none;
+  scrollbar-width: none;
+}
+
+.custom-displaytypeproducts{
+  height: 520px;
+  overflow: auto;
+  -ms-overflow-style:none;
+  scrollbar-width: none;
+}
+
+
+.offer-text {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+
+
+
+
+
+/*  Media Query for Mobile Phones   */
+
+body{
+  @media (min-width: 100px) and (max-width: 250px) {
+    h4, h5, p {
+         font-size: 7px; 
+     }
+   }
+
+  @media (min-width: 251px) and (max-width: 575px) {
+    h4, h5, table, p
+    {
+        font-size: 8px;
+        padding:auto; 
+        margin:auto;
+    }
+    .custom-date{font-size: 12px; margin:auto;}                 /* Mybill */
+    .custom-imgwishlist{ height:60px; width:100%;}              /* Mywishlist*/
+    .btn-wishlist{ font-size:8px; padding:4px 4px 4px 4px;}    /* Mywishlist */
+    .custom-btndropdown{ padding:4px 2px 4px 2px; width:90px;}  /* Admin */
+    .sellerdashboard{font-size:9px;}                            /* seller dashboard */
+    .sellerorder{height:30px;}                                  /* seller order */
+    .cartimg{height:80px;}                                      /* cartlist */
+    .cartbtn{padding:1px; width:25px; font-size:10px;}          /* cartlist */
+    .carthead{font-size:20px;}                                  /* cartlist */
+    .carthead1{font-size:14px; vertical-align: bottom;}         /* cartlist */
+    .cartprice{font-size:10px;}                                 /* cartlist */
+    .custom-totalamount{font-size:20px;}                        /* cartlist */
+    .orderimg{height:50px;}                                     /* Orderlist */
+    .nav-category{margin-right:6px; font-size: 10px; vertical-align: center;} /* Admin */
+    .nav-bar{padding:4px;}                                      /* Admin */
+    #demo.custom-offcanvas{width:50%; margin-top:87px;}         /* Admin */
+    .custom-imgsingle{height : 200px;}                          /*  Single Display */
+    .btn-displaysingle{ font-size : 10px;}                      /* Single Display */
+    h6{font-size: 14px;}                                        /* Single Display  */
+    .form-check{padding-left:5px;}                              /* displaytype */
+    .responsive-button { font-size: 9px;}                       /* Display Type */
+    .custom-img{ height : 100px; width:100px }                               /* Display Type */
+    .custom-displaytype{height:200px;}                          /* Display Type */
+    .custom-brandnames{height:300px; overflow:auto; -ms-overflow-style:none; scrollbar-width: none;} /* Display Type */
+    .productoffer{width:60px;}
+    .custom-nameprice{font-size:5px;}
+
+  }
+}
