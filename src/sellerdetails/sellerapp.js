@@ -27,7 +27,7 @@ const Sellerapp = () =>
                 <div className="container">
                     <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-shopping-bag fs-1"></i>
-                        <span className="ms-2 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Shree</span>
+                        <span className="ms-2 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Sree</span>
                         <span className="ms-1 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Shop</span>
                     </span>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">

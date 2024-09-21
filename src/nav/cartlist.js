@@ -623,7 +623,7 @@ const Cartlist = () =>
                                                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                     <h6 > Thank you for shopping with us! </h6>
                                                     <h6 className="mt-3 text-decoration-underline"> Terms & Conditions </h6>
-                                                    <p className="fs-6"> Returns follow ShreeShop's policy, which may include fees or exclusions.</p>
+                                                    <p className="fs-6"> Returns follow SreeShop's policy, which may include fees or exclusions.</p>
                                                 </div>
                                                 <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 m-auto mt-2 me-0 ms-auto">
                                                     <div className="row mt-2 mb-3">
