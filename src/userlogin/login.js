@@ -45,7 +45,7 @@ const Userlogin = () =>
     }
 
     if (loggedIn)
-        return <Navigate to="/SreeShop/home" />;
+        return <Navigate to="/home" />;
 
 
     return(

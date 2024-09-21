@@ -128,7 +128,7 @@ const Displaytype = () => {
     }, [category, searchcategoryname, searchbrandname]);
 
     if (!islogin) {
-        return <Navigate to="/SreeShop/userlogin" />;
+        return <Navigate to="/userlogin" />;
     }
 
     return (
@@ -160,7 +160,7 @@ const Displaytype = () => {
                             <div className="col-sm-12 col-lg-12 mb-4" key={index}>
                                 <div className="row p-1 m-auto">
                                     <div className="col-sm-3 text-center">
-                                        <Link to={`/SreeShop/${product.categoryname}/${product.producturl}`}>
+                                        <Link to={`/${product.categoryname}/${product.producturl}`}>
                                             <img 
                                                 src={`${config.host}/productimages/${product.productimage}`} 
                                                 alt={product.productname} 

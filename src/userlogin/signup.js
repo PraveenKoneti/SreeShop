@@ -244,7 +244,7 @@ const Usersignup = () =>
 
 
     if (loggedIn)
-        return <Navigate to="/SreeShop/userlogin" />;
+        return <Navigate to="/userlogin" />;
 
 
 

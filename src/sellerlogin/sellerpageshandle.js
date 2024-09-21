@@ -15,7 +15,7 @@ const Handlesellerpage = () => {
 
     // Redirect to home page if not in seller flow
     if (!localStorage.getItem("sellerid")) {
-        navigate("/SreeShop/home", { replace: true });
+        navigate("/home", { replace: true });
     }
 
     return null;

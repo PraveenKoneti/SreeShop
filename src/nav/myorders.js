@@ -30,7 +30,7 @@ const Myorders = () => {
     useEffect(() => { getorderlist(); }, []);
 
     if (localStorage.getItem("userid") === null)
-        return <Navigate to="/SreeShop/userlogin" />;
+        return <Navigate to="/userlogin" />;
 
     return (
         <div className="container">

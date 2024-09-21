@@ -248,7 +248,7 @@ const Sellersignup = () =>
 
 
     if (loggedIn)
-        return <Navigate to="/SreeShop/login" />;
+        return <Navigate to="/login" />;
 
 
 

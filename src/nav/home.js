@@ -34,28 +34,28 @@ const Home = () =>
                     </div>
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <Link to="/SreeShop/womens wear"> <img src="images/carousel/fashion.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/womens wear"> <img src="images/carousel/fashion.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/watches"> <img src="images/carousel/watch.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/watches"> <img src="images/carousel/watch.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/head phones"> <img src="images/carousel/airpods.jpg" className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/head phones"> <img src="images/carousel/airpods.jpg" className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/mobiles"> <img src="images/carousel/mobiles.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/mobiles"> <img src="images/carousel/mobiles.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/laptops"> <img src="images/carousel/laptops.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/laptops"> <img src="images/carousel/laptops.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/footwear"> <img src="images/carousel/footwear.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/footwear"> <img src="images/carousel/footwear.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/moisturizers"> <img src="images/carousel/moisturizer.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/moisturizers"> <img src="images/carousel/moisturizer.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/SreeShop/bags"> <img src="images/carousel/lauguage.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                            <Link to="/bags"> <img src="images/carousel/lauguage.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
@@ -71,7 +71,7 @@ const Home = () =>
         
                 
                 <div className='mt-1 mb-1 m-0 p-0'>
-                    <img src="images/home/SreeShopdelivery.jpg"  width="100%" height="auto"  className="img-fluid" alt="" /> 
+                    <img src="images/homedelivery.jpg"  width="100%" height="auto"  className="img-fluid" alt="" /> 
                 </div>
 
 
@@ -83,35 +83,35 @@ const Home = () =>
                         <div className='row mb-3 pt-3 pb-3 m-1 shadow-lg'>
                             <div className='col-2 m-auto p-1 bg-white'>
                                 <div className='m-auto border border-white border-4 '> 
-                                    <Link to="/SreeShop/mens wear">  <img src="images/home/clothes.jpg" width="100%" height="auto" className="img-fluid" alt=""  /> </Link>
+                                    <Link to="/mens wear">  <img src="images/home/clothes.jpg" width="100%" height="auto" className="img-fluid" alt=""  /> </Link>
                                     <h4  className="text-center mt-2">Starting <br/> <i className="fa-solid fa-indian-rupee-sign ms-1"></i> 499 </h4>
                                 </div>
                             </div>
 
                             <div className='col-2 m-auto p-1 bg-white'>
                                 <div className='m-auto border border-white border-4 '> 
-                                    <Link to="/SreeShop/womens wear">  <img src="images/home/womens.jpg" width="100%" height="auto" className="img-fluid" alt=""  />  </Link>
+                                    <Link to="/womens wear">  <img src="images/home/womens.jpg" width="100%" height="auto" className="img-fluid" alt=""  />  </Link>
                                     <h4  className='text-center mt-2'> Starting <br/> <i class="fa-solid fa-indian-rupee-sign ms-1"></i> 699 </h4>
                                 </div>
                             </div>
 
                             <div className='col-2 m-auto p-1 bg-white'>
                                 <div className='m-auto border border-white border-4 '> 
-                                    <Link to="/SreeShop/footwear">  <img src="images/home/footwear.jpg" width="100%" height="auto" className="img-fluid" alt="" />  </Link>
+                                    <Link to="/footwear">  <img src="images/home/footwear.jpg" width="100%" height="auto" className="img-fluid" alt="" />  </Link>
                                     <h4  className='text-center mt-2'> Starting <br/> <i class="fa-solid fa-indian-rupee-sign ms-1"></i> 499 </h4>
                                 </div>
                             </div>
 
                             <div className='col-2 m-auto p-1 bg-white'>
                                 <div className='m-auto border border-white border-4 '> 
-                                    <Link to="/SreeShop/mobiles"> <img src="images/home/mobile.jpg" width="100%" height="auto" className="img-fluid" alt="" />  </Link>
+                                    <Link to="/mobiles"> <img src="images/home/mobile.jpg" width="100%" height="auto" className="img-fluid" alt="" />  </Link>
                                     <h4  className='text-center mt-2'> Starting <br/> <i class="fa-solid fa-indian-rupee-sign"></i> 5999 </h4>
                                 </div>
                             </div>
 
                             <div className='col-2 m-auto p-1 bg-white'>
                                 <div className='m-auto border border-white border-4 '> 
-                                    <Link to="/SreeShop/electronic goods">  <img src="images/home/electronicgoods.jpg" width="100%" height="auto" className="img-fluid" alt=""  /> </Link>
+                                    <Link to="/electronic goods">  <img src="images/home/electronicgoods.jpg" width="100%" height="auto" className="img-fluid" alt=""  /> </Link>
                                     <h4  className='text-center fs-auto mt-2'> Starting <br/> <i class="fa-solid fa-indian-rupee-sign ms-1"></i> 499 </h4>
                                 </div>
                             </div>
@@ -131,26 +131,26 @@ const Home = () =>
                         <div className='row mb-3 pt-2 pb-2 m-1 p-1 shadow-lg m-auto'>
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2 '> 
-                                    <Link to="/SreeShop/laptops">  <img src="images/home/Dell i3.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/laptops">  <img src="images/home/Dell i3.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1 '>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/laptops">  <img src="images/home/acer.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/laptops">  <img src="images/home/acer.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/laptops">  <img src="images/home/asus.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/laptops">  <img src="images/home/asus.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/laptops">  <img src="images/home/dell.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/laptops">  <img src="images/home/dell.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
                           
@@ -179,26 +179,26 @@ const Home = () =>
                         <div className='row mb-3 pt-2 pb-2 m-1 p-1 shadow-lg m-auto'>
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2 '> 
-                                    <Link to="/SreeShop/mens wear">  <img src="images/home/summercool1.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/mens wear">  <img src="images/home/summercool1.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1 '>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/kids wear">  <img src="images/home/summercool2.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/kids wear">  <img src="images/home/summercool2.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/womens wear">  <img src="images/home/summercool4.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/womens wear">  <img src="images/home/summercool4.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/mens wear">  <img src="images/home/summercool5.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/mens wear">  <img src="images/home/summercool5.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
                             
@@ -220,10 +220,10 @@ const Home = () =>
                 <div className='m-0 p-0'>
                     <div className='row m-0'>
                         <div className='col-6 m-0 p-0'>
-                            <Link to="/SreeShop/mens wear"><img src="images/carousel/warmmen.jpg" className="d-block img-fluid" width="100%" height="auto"  alt="Men's Wear" /></Link>
+                            <Link to="/mens wear"><img src="images/carousel/warmmen.jpg" className="d-block img-fluid" width="100%" height="auto"  alt="Men's Wear" /></Link>
                         </div>
                         <div className='col-6 m-0 p-0'>
-                            <Link to="/SreeShop/womens wear"><img src="images/carousel/warmwomens.jpg" className="d-block img-fluid" width="100%" height="auto"  alt="Women's Wear" /></Link>
+                            <Link to="/womens wear"><img src="images/carousel/warmwomens.jpg" className="d-block img-fluid" width="100%" height="auto"  alt="Women's Wear" /></Link>
                         </div>
                     </div>
                 </div>
@@ -248,26 +248,26 @@ const Home = () =>
                     <div className='row mb-3 pt-2 pb-2 m-1 p-1 shadow-lg m-auto'>
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2 '> 
-                                    <Link to="/SreeShop/electronic goods">  <img src="images/home/ac.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/electronic goods">  <img src="images/home/ac.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1 '>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/electronic goods">  <img src="images/home/fridge.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/electronic goods">  <img src="images/home/fridge.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/electronic goods">  <img src="images/home/cooler.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/electronic goods">  <img src="images/home/cooler.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
 
                             <div className='col-3 m-auto p-1'>
                                 <div className='m-auto bg-white p-2'> 
-                                    <Link to="/SreeShop/electronic goods">  <img src="images/home/washingmachine.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
+                                    <Link to="/electronic goods">  <img src="images/home/washingmachine.jpg" width="100%" height="auto" className="img-fluid" alt="" /> </Link>
                                 </div>
                             </div>
                         </div>
@@ -289,15 +289,15 @@ const Home = () =>
                     <div className='col-sm-11 m-auto'>
                         <div className='row m-1 p-0 shadow-lg'>
                             <div className="col-4 m-auto p-auto">
-                                <Link to="/SreeShop/mens wear">  <img src="images/home/trending1.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
+                                <Link to="/mens wear">  <img src="images/home/trending1.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
                             </div>
 
                             <div className="col-4 m-auto p-auto">
-                                <Link to="/SreeShop/kids wear">  <img src="images/home/trending2.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
+                                <Link to="/kids wear">  <img src="images/home/trending2.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
                             </div>
 
                             <div className="col-4 m-auto p-auto">
-                                <Link to="/SreeShop/womens wear">  <img src="images/home/trending3.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
+                                <Link to="/womens wear">  <img src="images/home/trending3.jpg" width="100%" height="auto" className='img-fluid' alt="" /> </Link>
                             </div>
 
                         </div>

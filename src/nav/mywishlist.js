@@ -91,7 +91,7 @@ const Mywishlist = () =>
 
     
     if(checkcart == true)
-        return <Navigate to="/SreeShop/cartlist" />
+        return <Navigate to="/cartlist" />
 
 
     if(wishlist.length > 0)

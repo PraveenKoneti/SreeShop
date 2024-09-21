@@ -143,7 +143,7 @@ const Displaysingle = () =>
         let[gocart, pickgocart] = useState(false)
 
         if(gocart === true)
-            return <Navigate to="/SreeShop/cartlist" />
+            return <Navigate to="/cartlist" />
 
         return(
             <div className="container">

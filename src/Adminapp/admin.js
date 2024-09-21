@@ -85,7 +85,7 @@ const Adminapp = ()=>
                                                     <ul className="suggestions-list list-group position-absolute mt-2 scrollable-list">
                                                         {filteredSuggestions.map(suggestion => (
                                                             <li key={suggestion._id} className="list-group-item">
-                                                                <Link to={`/SreeShop/${suggestion.categoryname}-${suggestion.brandname}`} className="text-decoration-none text-black" onClick={() => onsearch(suggestion)}> {truncateProductName(suggestion.productname)}</Link>
+                                                                <Link to={`/${suggestion.categoryname}-${suggestion.brandname}`} className="text-decoration-none text-black" onClick={() => onsearch(suggestion)}> {truncateProductName(suggestion.productname)}</Link>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -94,13 +94,13 @@ const Adminapp = ()=>
                                         </div>
                                     </li>
                                     <li className="nav-item me-4 p-2">
-                                        <Link className="text-decoration-none text-primary fs-5" to="/SreeShop/home"> <i className="fa fa-home"></i> Home </Link>
+                                        <Link className="text-decoration-none text-primary fs-5" to="/home"> <i className="fa fa-home"></i> Home </Link>
                                     </li>
                                     <li className="nav-item me-4 p-2">
                                         <Link onClick={Sellerpage} className="text-decoration-none text-success fs-5" target="_blank" rel="noopener noreferrer"><i class="fa fa-store"></i> Become a Seller</Link>
                                     </li>
                                     <li className="nav-item me-4 p-2">
-                                        <Link className="text-decoration-none text-warning fs-5" to="/SreeShop/cartlist"><i className="fa fa-shopping-cart"></i> Cart </Link>
+                                        <Link className="text-decoration-none text-warning fs-5" to="/cartlist"><i className="fa fa-shopping-cart"></i> Cart </Link>
                                     </li>
                                     <li className="nav-item me-4 p-2">
                                         <div className="dropdown dropdown-menu-end">
@@ -109,18 +109,18 @@ const Adminapp = ()=>
                                                 {localStorage.getItem("id") !== "" ? localStorage.getItem("username") || "Profile" : "Profile"}
                                             </button>
                                             <ul className="dropdown-menu" style={{ minWidth: '248px' }} >
-                                                <li className="ms-3 pt-3 pb-3"> <b>New Customer ?</b> <Link to='/SreeShop/usersignup' className="text-decoration-none ms-2 fs-5"> Sign Up </Link>  </li>
+                                                <li className="ms-3 pt-3 pb-3"> <b>New Customer ?</b> <Link to='/usersignup' className="text-decoration-none ms-2 fs-5"> Sign Up </Link>  </li>
                                                 <li className="mb-3"> <hr className="dropdown-divider"  /> </li>
-                                                <li className="mb-3"> <Link to="/SreeShop/myprofile" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-circle-user"></i> My Profile </Link> <i className="ms-2">Hi {localStorage.getItem("username")}</i> </li>
-                                                <li className="mb-3"> <Link to="/SreeShop/myorders" className="ms-3 text-decoration-none fs-6"> <i class="fa fa-database"></i>  My Orders</Link> </li>
-                                                <li className="mb-3"> <Link to="/SreeShop/mywishlist" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-heart"></i> Wishlist </Link> </li>
+                                                <li className="mb-3"> <Link to="/myprofile" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-circle-user"></i> My Profile </Link> <i className="ms-2">Hi {localStorage.getItem("username")}</i> </li>
+                                                <li className="mb-3"> <Link to="/myorders" className="ms-3 text-decoration-none fs-6"> <i class="fa fa-database"></i>  My Orders</Link> </li>
+                                                <li className="mb-3"> <Link to="/mywishlist" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-heart"></i> Wishlist </Link> </li>
                                                 <li className="mb-3"> <Link className="ms-3 text-decoration-none fs-6"> <i className="fa fa-gift"></i> Rewards </Link> </li>
                                                 <li className="mb-3 text-center">
                                                     <div className="row ms-2">
                                                         {(localStorage.getItem("userid") == null) ?
                                                             (
                                                                 <div className="col-xl-6 m-auto">
-                                                                    <Link to="/SreeShop/userlogin"> <button className="btn btn-primary form-control  custom-btndropdown"> Login </button> </Link>  
+                                                                    <Link to="/userlogin"> <button className="btn btn-primary form-control  custom-btndropdown"> Login </button> </Link>  
                                                                 </div>
                                                             ):
                                                             (
@@ -144,18 +144,18 @@ const Adminapp = ()=>
                     <nav className="bg-warning nav-bar">
                         <div className="container ms-2 nav-category">
                             <Link className="text-white text-decoration-none  nav-category" data-bs-toggle="offcanvas" data-bs-target="#demo"> <i className="fa fa-list text-white me-2"></i> All </Link>
-                            <Link to="/SreeShop/kids wear" className="text-white text-decoration-none  nav-category"> Kids Wear </Link>              
-                            <Link to="/SreeShop/mens wear" className="text-white text-decoration-none  nav-category"> Mens Wear </Link>
-                            <Link to="/SreeShop/womens wear" className="text-white text-decoration-none  nav-category"> Womens Wear </Link>
-                            <Link to="/SreeShop/bags" className="text-white text-decoration-none  nav-category"> Bags </Link>
-                            <Link to="/SreeShop/head phones" className="text-white text-decoration-none  nav-category"> Head Phones </Link>
-                            <Link to={`/SreeShop/${'mobiles'}-${""}`} className="text-white text-decoration-none  nav-category"> Mobiles </Link>
-                            <Link to="/SreeShop/laptops" className="text-white text-decoration-none  nav-category"> Laptops </Link>
-                            <Link to="/SreeShop/watches" className="text-white text-decoration-none  nav-category"> Watches </Link>
-                            <Link to="/SreeShop/electronic gadgets" className="text-white text-decoration-none  nav-category"> Elec-Goods </Link>
-                            <Link to="/SreeShop/footwear" className="text-white text-decoration-none  nav-category"> Footwear </Link>
-                            <Link to="/SreeShop/shampoos" className="text-white text-decoration-none  nav-category"> Shampoos </Link>
-                            <Link to="/SreeShop/moisturizers" className="text-white text-decoration-none  nav-category"> Moisturizers </Link>
+                            <Link to="/kids wear" className="text-white text-decoration-none  nav-category"> Kids Wear </Link>              
+                            <Link to="/mens wear" className="text-white text-decoration-none  nav-category"> Mens Wear </Link>
+                            <Link to="/womens wear" className="text-white text-decoration-none  nav-category"> Womens Wear </Link>
+                            <Link to="/bags" className="text-white text-decoration-none  nav-category"> Bags </Link>
+                            <Link to="/head phones" className="text-white text-decoration-none  nav-category"> Head Phones </Link>
+                            <Link to={`/${'mobiles'}-${""}`} className="text-white text-decoration-none  nav-category"> Mobiles </Link>
+                            <Link to="/laptops" className="text-white text-decoration-none  nav-category"> Laptops </Link>
+                            <Link to="/watches" className="text-white text-decoration-none  nav-category"> Watches </Link>
+                            <Link to="/electronic gadgets" className="text-white text-decoration-none  nav-category"> Elec-Goods </Link>
+                            <Link to="/footwear" className="text-white text-decoration-none  nav-category"> Footwear </Link>
+                            <Link to="/shampoos" className="text-white text-decoration-none  nav-category"> Shampoos </Link>
+                            <Link to="/moisturizers" className="text-white text-decoration-none  nav-category"> Moisturizers </Link>
                         </div>
                     </nav>
                 </nav>
@@ -165,24 +165,24 @@ const Adminapp = ()=>
             <Routes>
 
                 <Route path="/*" element={ <Home/> } />
-                <Route exact path="/SreeShop/home" element={ <Home/> } />
-                <Route exact path="/SreeShop/cartlist" element={ <Cartlist/> } />
-                <Route exact path="/SreeShop/myprofile" element={ <Myprofile/> } />
-                <Route exact path="/SreeShop/myorders" element= { <Myorders/> } />
-                <Route exact path="/SreeShop/mywishlist" element= { <Mywishlist/> } />
-                <Route exact path="/SreeShop/mybill" element= { <Mybill/> } />
+                <Route exact path="/home" element={ <Home/> } />
+                <Route exact path="/cartlist" element={ <Cartlist/> } />
+                <Route exact path="/myprofile" element={ <Myprofile/> } />
+                <Route exact path="/myorders" element= { <Myorders/> } />
+                <Route exact path="/mywishlist" element= { <Mywishlist/> } />
+                <Route exact path="/mybill" element= { <Mybill/> } />
 
-                <Route exact path="/SreeShop/userlogin" element={ <Userlogin/> } />
-                <Route exact path="/SreeShop/usersignup" element={ <Usersignup/> } />
+                <Route exact path="/userlogin" element={ <Userlogin/> } />
+                <Route exact path="/usersignup" element={ <Usersignup/> } />
 
-                <Route exact path="/SreeShop/:category" element={ <Displaytype/> } /> 
-                <Route exact path="/SreeShop/:searchvalue" element={ <Displaytype/> } /> 
-                <Route exact path="/SreeShop/:category/:id" element= { <Displaysingle/> } />
+                <Route exact path="/:category" element={ <Displaytype/> } /> 
+                <Route exact path="/:searchvalue" element={ <Displaytype/> } /> 
+                <Route exact path="/:category/:id" element= { <Displaysingle/> } />
 
-                <Route exact path="/SreeShop/becomeseller" element={ <Handlesellerpage/> } />
+                <Route exact path="/becomeseller" element={ <Handlesellerpage/> } />
 
-                {localStorage.getItem("userlogin") === "false" && <Route path="/SreeShop/Home" element={<Navigate to="/SreeShop/Home" replace />} />}
-                {localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/SreeShop/Home" element={<Navigate to="/SreeShop/Home" replace />} />}
+                {localStorage.getItem("userlogin") === "false" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
+                {localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
 
             </Routes>
 

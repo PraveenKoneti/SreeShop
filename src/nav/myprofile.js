@@ -370,7 +370,7 @@ const Myprofile = () =>
                             <button className="btn btn-primary form-control border rounded-pill mb-3 mt-1" onClick={sendemail} data-bs-toggle="modal" data-bs-target="#myModal"> Update </button>
                         </div>
                         <p className="text-center"> Or </p>
-                        <p className="text-center"> Already have an account? <Link to="/SreeShop/login"> <b className="text-primary ms-2"> Login</b> </Link> </p>
+                        <p className="text-center"> Already have an account? <Link to="/login"> <b className="text-primary ms-2"> Login</b> </Link> </p>
                     </div>
                 </div>
                 <div className="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4"></div>

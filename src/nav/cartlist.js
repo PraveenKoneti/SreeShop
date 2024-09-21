@@ -338,14 +338,14 @@ const Cartlist = () =>
 
 
     // if (Object.keys(customer).length > 0) {
-    //     return <Navigate to="/SreeShop/mybill" state={{ customer }} replace />;
+    //     return <Navigate to="/mybill" state={{ customer }} replace />;
     // }
 
     if(ordered === true)
-        return <Navigate to="/SreeShop/myorders" />
+        return <Navigate to="/myorders" />
 
     if(loginin === true)
-        return <Navigate to="/SreeShop/userlogin" /> 
+        return <Navigate to="/userlogin" /> 
     
 
     if(cartlist.length > 0)
