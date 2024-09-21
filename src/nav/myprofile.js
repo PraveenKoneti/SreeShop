@@ -99,7 +99,7 @@ const Myprofile = () =>
     const gendervalidation=(event)=>
     {
         alert("hi praveen");
-        if((event == "Male") || (event == "Female") || event == "Other")
+        if((event === "Male") || (event === "Female") || event === "Other")
         {
             pickgendererror("correct");
             alert("gender is comming here");
@@ -127,7 +127,7 @@ const Myprofile = () =>
     let[cpassworderror, pickcpassworderror] = useState("correct");
     const cpasswordvalidation  = (event) =>
     {
-        if((password == event))
+        if((password === event))
             pickcpassworderror("correct");
         else
             pickcpassworderror("wrong");
@@ -278,8 +278,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start"> <h6>First Name </h6> </div>
                                     <div className="col-8"> 
                                         <input type="text"  className="form-control" 
-                                            style={{border:(fname!="")?(fnameerror=="wrong")?'4px solid red':'4px solid green':((fnameerror=="wrong")?'4px solid red':''),
-                                            boxShadow: (fname!="")?(fnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((fnameerror=="wrong")?'0px 0px 5px red':'')}}
+                                            style={{border:(fname!=="")?(fnameerror==="wrong")?'4px solid red':'4px solid green':((fnameerror==="wrong")?'4px solid red':''),
+                                            boxShadow: (fname!=="")?(fnameerror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((fnameerror==="wrong")?'0px 0px 5px red':'')}}
                                             onChange={obj=> { pickfname(obj.target.value); fnamevalidation(obj.target.value)}}
                                             value={fname}  
                                         />
@@ -290,8 +290,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start"> <h6>Last Name </h6> </div>
                                     <div className="col-8"> 
                                         <input type="text"  className="form-control" 
-                                            style={{border:(lname!="")?(lnameerror=="wrong")?'4px solid red':'4px solid green':((lnameerror=="wrong")?'4px solid red':''),
-                                            boxShadow: (lname!="")?(lnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((lnameerror=="wrong")?'0px 0px 5px red':'')}}
+                                            style={{border:(lname!=="")?(lnameerror==="wrong")?'4px solid red':'4px solid green':((lnameerror==="wrong")?'4px solid red':''),
+                                            boxShadow: (lname!=="")?(lnameerror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((lnameerror==="wrong")?'0px 0px 5px red':'')}}
                                             onChange={obj=> { picklname(obj.target.value); lnamevalidation(obj.target.value)}} 
                                             value={lname} 
                                         />
@@ -302,8 +302,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start"> <h6>Mobile </h6> </div>
                                     <div className="col-8 text-danger"> 
                                             <input type="number" className="form-control text-dark"
-                                                style={{border:(mobile!="")?(mobileerror=="wrong")?'4px solid red':'4px solid green':((mobileerror=="wrong")?'4px solid red':''),
-                                                boxShadow: (mobile!="")?(mobileerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((mobileerror=="wrong")?'0px 0px 5px red':'')}}
+                                                style={{border:(mobile!=="")?(mobileerror==="wrong")?'4px solid red':'4px solid green':((mobileerror==="wrong")?'4px solid red':''),
+                                                boxShadow: (mobile!=="")?(mobileerror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((mobileerror==="wrong")?'0px 0px 5px red':'')}}
                                                 onChange={obj=> { pickmobile(obj.target.value); mobilevalidation(obj.target.value)}}
                                                 value={mobile}
                                             />
@@ -315,8 +315,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start">  <h6>Email </h6>  </div>
                                     <div className="col-8 text-danger"> 
                                         <input type="email" className="form-control bg-white" 
-                                            style={{border:(email!="")?(emailerror=="wrong")?'4px solid red':'4px solid green':((emailerror=="wrong")?'4px solid red':''),
-                                            boxShadow: (email!="")?(emailerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((emailerror=="wrong")?'0px 0px 5px red':'')}}
+                                            style={{border:(email!=="")?(emailerror==="wrong")?'4px solid red':'4px solid green':((emailerror==="wrong")?'4px solid red':''),
+                                            boxShadow: (email!=="")?(emailerror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((emailerror==="wrong")?'0px 0px 5px red':'')}}
                                             onChange={obj=> { pickemail(obj.target.value); emailvalidation(obj.target.value)}}
                                             value={email}
                                         /> 
@@ -329,8 +329,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start">  <h6>Gender</h6>  </div>
                                     <div className="col-8">
                                         <select className="form-select" onChange={obj=>{pickgender(obj.target.value); gendervalidation(obj.target.value)}} value={gender}
-                                            style={{border : (gender!="")?(gendererror=="correct")?'4px solid green':'4px solid red':((gendererror=="wrong")?'4px solid red':''),
-                                            boxShadow: (gender!="")?(gendererror=="wrong")?'0px 0px 5px red':'0px 0px solid':((gendererror=="wrong")?'0px 0px 5px red':'')}}
+                                            style={{border : (gender!=="")?(gendererror==="correct")?'4px solid green':'4px solid red':((gendererror==="wrong")?'4px solid red':''),
+                                            boxShadow: (gender!=="")?(gendererror==="wrong")?'0px 0px 5px red':'0px 0px solid':((gendererror==="wrong")?'0px 0px 5px red':'')}}
                                         >
                                             <option value="">Choose</option>
                                             <option> Male </option>
@@ -345,8 +345,8 @@ const Myprofile = () =>
                                     <div className="col-4 text-start">  <h6>Password</h6> </div>
                                     <div className="col-8">  
                                         <input type="password" className="form-control" 
-                                            style={{border:(password!="")?(passworderror=="wrong")?'4px solid red':'4px solid green':((passworderror=="wrong")?'4px solid red':''),
-                                            boxShadow: (password!="")?(passworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((passworderror=="wrong")?'0px 0px 5px red':'')}}
+                                            style={{border:(password!=="")?(passworderror==="wrong")?'4px solid red':'4px solid green':((passworderror==="wrong")?'4px solid red':''),
+                                            boxShadow: (password!=="")?(passworderror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((passworderror==="wrong")?'0px 0px 5px red':'')}}
                                             onChange={obj=> { pickpassword(obj.target.value); passwordvalidation(obj.target.value)}}
                                             value={password}
                                         /> 
@@ -357,8 +357,8 @@ const Myprofile = () =>
                                 <div className="col-4 text-start">  <h6>C-Password</h6>  </div>
                                 <div className="col-8"> 
                                     <input type="password" className="form-control" 
-                                        style={{border:(cpassword!="")?(cpassworderror=="wrong")?'4px solid red':'4px solid green':((cpassworderror=="wrong")?'4px solid red':''),
-                                        boxShadow: (cpassword!="")?(cpassworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((cpassworderror=="wrong")?'0px 0px 5px red':'')}}
+                                        style={{border:(cpassword!=="")?(cpassworderror==="wrong")?'4px solid red':'4px solid green':((cpassworderror==="wrong")?'4px solid red':''),
+                                        boxShadow: (cpassword!=="")?(cpassworderror==="wrong")?'0px 0px 5px red':'0px 0px 5px green':((cpassworderror==="wrong")?'0px 0px 5px red':'')}}
                                         onChange={obj=> { pickcpassword(obj.target.value); cpasswordvalidation(obj.target.value)}}
                                         value={cpassword}
                                     /> 

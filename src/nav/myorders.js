@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import swal from "sweetalert";
 import { fetchData, postData } from "../Api/apihandler";
 import { config } from "../config";
-import { Timeline } from 'primereact/timeline'; // Import Timeline
 
 const Myorders = () => {
     let [allorderlist, updateorderlist] = useState([]);
@@ -113,7 +112,7 @@ const Myorders = () => {
                                                 orders.products.map((items, index2) => {
                                                     return (
                                                         <tr key={index2}>
-                                                            <td> <img src={`${config.host}/productimages/${items.productimage}`} width="60%" height="80" className="orderimg" /> </td>
+                                                            <td> <img src={`${config.host}/productimages/${items.productimage}`} width="60%" height="80" className="orderimg" alt="" /> </td>
                                                             <td className="text-start"> {items.productname} </td>
                                                             <td> {items.productprice} </td>
                                                             <td> {items.productquantity} </td>
