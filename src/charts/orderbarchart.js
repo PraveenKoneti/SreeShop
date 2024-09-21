@@ -76,7 +76,7 @@ const Orderbarchart = () => {
 
   useEffect(() => {
     getBarChartData();
-  }, [year]);
+  }, [year]); 
 
   const { data: chartData, options: chartOptions } = setupBarChart(orderModalData);
 

@@ -31,10 +31,10 @@ const Sellerlogin = () =>
             let usercheck = {email:useremail, password:userpassword};
             await postData(config.sellerlogin, usercheck)
             .then(sellerinfo=>{   
-                if(sellerinfo.length > 0)
+                if(sellerinfo.status)
                 {
-                    localStorage.setItem("sellerid", sellerinfo[0]._id);
-                    localStorage.setItem("sellername", sellerinfo[0].firstname);
+                    localStorage.setItem("sellerid", sellerinfo.existingUser._id);
+                    localStorage.setItem("sellername", sellerinfo.existingUser.firstname);
                     localStorage.setItem("sellertoken", sellerinfo.token);
                     swal("Login Successfull", "Credentials are Matched Successfully", "success")
                     .then(() => {

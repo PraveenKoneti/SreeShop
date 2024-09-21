@@ -144,11 +144,11 @@ body{
     h6{font-size: 14px;}                                        /* Single Display  */
     .form-check{padding-left:5px;}                              /* displaytype */
     .responsive-button { font-size: 9px;}                       /* Display Type */
-    .custom-img{ height : 100px; width:100px }                               /* Display Type */
+    .custom-img{ height : 100px; width:100px }                  /* Display Type */
     .custom-displaytype{height:200px;}                          /* Display Type */
     .custom-brandnames{height:300px; overflow:auto; -ms-overflow-style:none; scrollbar-width: none;} /* Display Type */
-    .productoffer{width:60px;}
-    .custom-nameprice{font-size:5px;}
+    .productoffer{width:60px; font-size: 8px;}                  /* Display Type */
+    .custom-nameprice{font-size:5px;}       
 
   }
 }

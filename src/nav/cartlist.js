@@ -11,6 +11,7 @@ import { config } from "../config";
 const Cartlist = () =>
 {
     const [ordered, setOrdered] = useState(false);
+    
 
             //  TO DELETET THE PARTICULAR PRODUCT FROM THE CARTLIST
 
@@ -95,7 +96,7 @@ const Cartlist = () =>
             email: cemail, 
             address: caddress,
             orderstatus: "ordered", 
-            totalamount: totalamount - 100, 
+            totalamount: totalamount - discount, 
             paymentmethod: selectedpaymentmethod,
             itemslist: products
         };
@@ -179,6 +180,10 @@ const Cartlist = () =>
             if (response.data.message === "Email Sent Successfully!") {
                 swal("Ordered Successfully", "", "success")
                 .then(() => {
+                    const modal1 = window.bootstrap ? window.bootstrap.Modal.getInstance(document.getElementById('myModal')) : null;
+                    if (modal1) modal1.hide();
+                    const modal2 = window.bootstrap ? window.bootstrap.Modal.getInstance(document.getElementById('myModal2')) : null;
+                    if (modal2) modal2.hide();
                     setOrdered(true);
                 });
             } else {
@@ -294,7 +299,15 @@ const Cartlist = () =>
         if(localStorage.getItem("userid") != null)
         {
             let response = await fetchData(`${config.getcartlist}?id=${localStorage.getItem("userid")}`)
-            pickcartlist( response );
+            if(response.status)
+                pickcartlist( response.items );
+            else 
+            {
+                swal("Please Login",response.message,"warning")
+                .then(res=>{
+                    pickloginin(true);
+                })
+            }
         }
         else
         {
@@ -307,6 +320,7 @@ const Cartlist = () =>
     }
 
     let subtotal = 0;
+    let discount = 0;
     useEffect(()=>{getdata();}, []);
     useEffect(()=>{calculatetotalamount();}, [cartlist]);
 
@@ -350,7 +364,8 @@ const Cartlist = () =>
 
                         {
                             cartlist.map((cartproduct, index)=>{
-                                subtotal += cartproduct.productprice 
+                                subtotal += (cartproduct.productprice);
+                                discount += Math.round(cartproduct.productprice * 0.06);
                                 return(
                                     <div className="row mt-2 ps-2 pe-2 pb-3 cartprice">
                                         <div className="col-3 pb-3">
@@ -374,7 +389,7 @@ const Cartlist = () =>
                                         </div>
                                         <div className="col-3 text-end pb-3"> 
                                             <p onClick={deleteproduct.bind(this, cartproduct)} className="text-end"> <i className="fa-regular fa-circle-xmark fs-3 mb-2 text-danger"></i> </p>
-                                            <h3> <b className="cartprice"> <i class="fa fa-indian-rupee-sign"></i> {cartproduct.productquantity * cartproduct.productprice} </b> </h3>
+                                            <h3> <b className="cartprice"> <i class="fa fa-indian-rupee-sign"></i> {(cartproduct.productquantity * cartproduct.productprice)} </b> </h3>
                                         </div>
 
                                         <hr size={4} className="bg-dark"/>
@@ -397,7 +412,7 @@ const Cartlist = () =>
                             <div className="card-body border-0"> 
                                 <div className="row mb-2 m-0 p-0">
                                     <div className="col-6 mt-4 fs-5"> <p>Total Price </p> </div>
-                                    <div className="col-6 mt-4 fs-5 text-end"> <p> <b><i class="fa fa-indian-rupee-sign me-1"></i> {totalamount} </b> </p> </div>
+                                    <div className="col-6 mt-4 fs-5 text-end"> <p> <b><i class="fa fa-indian-rupee-sign me-1"></i> {totalamount - discount} </b> </p> </div>
                                 </div>
 
                                 <div className="row mb-2 m-0 p-0">
@@ -412,7 +427,7 @@ const Cartlist = () =>
 
                                 <div className="row mb-2 m-0 p-0">
                                     <div className="col-6 fs-5"> <p> Discount </p> </div>
-                                    <div className="col-6 fs-5 text-end"> <p> <b> - <i class="fa fa-indian-rupee-sign"></i> 200 </b> </p> </div>
+                                    <div className="col-6 fs-5 text-end"> <p> <b> - <i class="fa fa-indian-rupee-sign"></i> {discount} </b> </p> </div>
                                 </div>
 
                                 <hr size={4} className="bg-dark" />
@@ -420,7 +435,7 @@ const Cartlist = () =>
                             <div className="card-footer bg-black text-white pt-4 pb-4">
                                 <div className="row mb-4 m-0 p-0 bg-black">
                                     <div className="col-6 fs-5"> <p> <b> Amount Payable </b>  </p> </div>
-                                    <div className="col-6 fs-5 text-end"> <p> <b> <i class="fa fa-indian-rupee-sign"></i> {totalamount - 100} </b> </p> </div>
+                                    <div className="col-6 fs-5 text-end"> <p> <b> <i class="fa fa-indian-rupee-sign"></i> {totalamount - discount} </b> </p> </div>
                                 </div>
 
                                 <div className="row mb-2 m-0 p-0 bg-black">
@@ -481,12 +496,12 @@ const Cartlist = () =>
 
                                     <div className="row">
                                         <div className="col-8"> <h5> You are paying for 1 Order Request </h5> </div>
-                                        <div className="col-4 text-end"> <h6> INR {totalamount-100} </h6></div>
+                                        <div className="col-4 text-end"> <h6> INR {totalamount-discount} </h6></div>
                                     </div>
 
                                     <div className="row bg-warning pt-2 pb-1 mb-3">
                                         <div className="col-8 text-white"> <h5> TOTAL AMOUNT TO BE PAID </h5> </div>
-                                        <div className="col-4 text-end text-white"> <h6> INR {totalamount-100} </h6></div>
+                                        <div className="col-4 text-end text-white"> <h6> INR {totalamount-discount} </h6></div>
                                     </div>
 
                                     <h4> PAYMENT METHOD </h4>
@@ -608,9 +623,13 @@ const Cartlist = () =>
                                                 <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                     <h6 > Thank you for shopping with us! </h6>
                                                     <h6 className="mt-3 text-decoration-underline"> Terms & Conditions </h6>
-                                                    <p className="fs-6"> Returns follow SreeShop's policy, which may include fees or exclusions.</p>
+                                                    <p className="fs-6"> Returns follow ShreeShop's policy, which may include fees or exclusions.</p>
                                                 </div>
                                                 <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 m-auto mt-2 me-0 ms-auto">
+                                                    <div className="row mt-2 mb-3">
+                                                        <div className="col-6"> <h6> Discount : </h6></div>
+                                                        <div className="col-6"> <h6 className="text-end"> <i className="fa-solid fa-indian-rupee-sign me-1"></i>  {discount}   </h6></div>
+                                                    </div>
                                                     <div className="row mt-2 mb-3">
                                                         <div className="col-6"> <h6> Sub Total : </h6></div>
                                                         <div className="col-6"> <h6 className="text-end"> <i className="fa-solid fa-indian-rupee-sign me-1"></i>  {customer.totalamount}   </h6></div>

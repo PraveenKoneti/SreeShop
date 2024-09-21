@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import * as echarts from 'echarts';
-import Button from 'react-bootstrap/Button';
 import { fetchData } from '../Api/apihandler';
 import { config } from '../config';
 

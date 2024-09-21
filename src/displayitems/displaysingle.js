@@ -159,7 +159,7 @@ const Displaysingle = () =>
                                     (<i className="fa-regular fa-heart text-start" onClick={addwishlist.bind(this, product, "add")}></i>)
                                 }      
                             </div>
-                            <img src={`${config.host}/productimages/${product.productimage}`} width="75%" height="450" className="custom-imgsingle" />
+                            <img src={`${config.host}/productimages/${product.productimage}`} alt="" style={{ width: '75%', height: '450px' }} className="custom-imgsingle"/>
                         </div>
                         <div className="col-xl-6 col-xxl-6 col-lg-6 col-md-6 col-sm-6 ms-auto me-auto p-3 shadow-lg displaysingle">
                             <h3 className="valign-top mb-4 pt-1 text-primary"> {product.productname} </h3>

@@ -122,13 +122,10 @@ const Home = () =>
                 </div>
 
 
-
-
-
-
                 <div className='mt-1 mb-1 me-0 ms-0 p-0'>
                     <img className='pe-0 img-fluid ' src="images/home/summersale.gif" width="100%" height="auto"  /> 
                 </div>
+                
 
                 <div className='row m-0 p-0 mb-1 m-auto' style={{ backgroundColor: '#183f4e' }}>
                     <div className='col-xl-11 col-xxl-11 col-lg-11 col-md-11 col-sm-11 m-auto'>

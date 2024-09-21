@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
 import ReactPaginate from "react-paginate";
+import { Paginator } from 'primereact/paginator';
 
 import Editproduct from "./editproduct";
 import Deleteproduct from "./deleteproduct";
@@ -12,6 +13,15 @@ const Myproductlist = () => {
     let [filterkey, pickfilterkey] = useState("");
     let [viewproduct, pickviewproduct] = useState({});
 
+    const [first, setFirst] = useState(0);
+    const [rows, setRows] = useState(10);
+    const [itemsCount, setItemsCount] = useState(0);
+
+    const handlePagination = (event) =>{
+        setFirst(event.first);
+        setRows(event.rows);
+        getproducts(event.first, event.rows);
+    }
 
     const handleproductactive = async(productactive, id, name) => {
         let active = productactive === "In Stock" ? "Out Of Stock" : "In Stock";
@@ -25,10 +35,13 @@ const Myproductlist = () => {
         })
     }
 
-    const getproducts = async() => {
-        await fetchData(`${config.getsellerproduct}?sellerid=${localStorage.getItem("sellerid")} `)
+    const getproducts = async(skip=0, limit=10) => {
+        console.log(skip,"   ", limit);
+        await fetchData(`${config.getsellerproduct}?sellerid=${localStorage.getItem("sellerid")}&skip=${skip}&limit=${limit} `)
         .then(res => {
-            pickproductlist(res.reverse());
+            pickproductlist(res.product.reverse());
+            setItemsCount(res.productsCount);
+            
         })
     }
     
@@ -69,8 +82,8 @@ const Myproductlist = () => {
                             </div>
                         </div>
                     </div>
-                    <h3 className="text-center text-primary mb-3"> Total products : {productlist.length} </h3>
-                    <div className="table-responsive" style={{ height: '500px', overflow: "auto" }}>
+                    <h3 className="text-center text-primary mb-3"> Total products : {itemsCount} </h3>
+                    <div className="table-responsive">
                         <table className="table table-bordered text-center table-striped  table-hover">
                             <thead className="sticky-top fs-5 pt-2 pb-2">
                                 <tr>
@@ -93,7 +106,7 @@ const Myproductlist = () => {
                                                     <td data-bs-toggle="modal" data-bs-target="#myModal" onClick={()=>{pickviewproduct(product)}} style={{ width: '600px', textAlign: 'left' }}> {product.productname} </td>
                                                     <td> {product.productprice} </td>
                                                     <td> {product.brandname.toUpperCase()} </td>
-                                                    <td> 
+                                                    <td className="text-center justify-content-center"> 
                                                         <div className="text-center justify-content-center">
                                                             <div className="form-check form-switch">
                                                                 <input className="form-check-input" type="checkbox" id="mySwitch" name="productactive" value={product.productactive} checked={product.productactive === "In Stock"} onChange={handleproductactive.bind(this, product.productactive, product._id, product.productname)} />
@@ -113,27 +126,8 @@ const Myproductlist = () => {
                         </table>
                     </div>
                 </div>
-                <div className="mb-4 mt-4 col-sm-10 m-auto p-0 m-0">
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        breakLabel={"..."}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination  justify-content-center"}
-                        pageClassName={"page-item "}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active primary"}
-                    />
-                </div>
+
+                <Paginator first={first} rows={rows} totalRecords={itemsCount} rowsPerPageOptions={[10, 25, 50, 100]} onPageChange={handlePagination} /> 
             </div>
 
             <div class="modal" id="myModal">

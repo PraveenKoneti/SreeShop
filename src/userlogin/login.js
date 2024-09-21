@@ -20,8 +20,8 @@ const Userlogin = () =>
         {
             let usercheck = {email:useremail, password:userpassword};
             let userinfo = await login(config.userlogin, usercheck)
-            console.log(userinfo)
-            if(userinfo)
+            console.log("user login ___",userinfo)
+            if(userinfo.status)
             {
                 console.log("user info _____", userinfo);
                 localStorage.setItem("userid", userinfo.existingUser._id);
@@ -39,7 +39,8 @@ const Userlogin = () =>
                 setLoggedIn(true);
             }
             else 
-                swal("Invalid Credentials", "Please check your email and password", "warning"); 
+                swal("Invalid Credentials", "Please check your email and password", "warning");
+                
         }
     }
 

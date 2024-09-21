@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
@@ -8,8 +8,6 @@ import { fetchData } from '../Api/apihandler';
 import { config } from '../config';
 
 const Productcategorypiechart = (props) => {
-    const [productModalData, setProductModalData] = useState([]);
-    const [isProductModalOpen, setIsProductModalOpen] = useState(false);
 
     // Function to initialize and update the pie chart
     const setupPieChart = (products = []) => {
@@ -77,13 +75,6 @@ const Productcategorypiechart = (props) => {
         window.addEventListener('resize', () => {
             myChart.resize();
         });
-
-        myChart.on('click', function (params) {
-            const category = params.name;
-            const categoryProducts = products.filter(product => product.name === category); // Adjust to match your API data structure
-            setProductModalData(categoryProducts);
-            setIsProductModalOpen(true);
-        });
     };
 
     const getpiechartdata = async() => {
@@ -101,48 +92,6 @@ const Productcategorypiechart = (props) => {
     return (
         <div className='pt-4'>
             <div id="main1" style={{ width: '100%', height: '410px', maxWidth: '100%' }}></div>
-
-            {/* Product Modal */}
-            {/* {isProductModalOpen && (
-                <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <div className="modal-dialog modal-lg" style={{ maxWidth: '90vw' }}>
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h4 className="modal-title text-primary m-auto">Product Details</h4>
-                                <button type="button" className="close" onClick={() => setIsProductModalOpen(false)}>&times;</button>
-                            </div>
-                            <div className="modal-body" style={{ height: '540px', maxHeight: '70vh', overflow: 'auto' }}>
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Brand Name</th>
-                                            <th>Product Name</th>
-                                            <th>Price</th>
-                                            <th>Active</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {console.log(productModalData)}
-                                        {productModalData.map((product, index) => (
-                                            <tr key={index}>
-                                                <td><img src={`${config.host}/productimages/${product.productimage}`} alt={product.productname} width="50" height="50" /></td>
-                                                <td>{product.brandname}</td>
-                                                <td>{product.productname}</td>
-                                                <td>{product.productprice}</td>
-                                                <td>{product.productactive ? 'Yes' : 'No'}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" onClick={() => setIsProductModalOpen(false)}>Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )} */}
         </div>
     );
 }

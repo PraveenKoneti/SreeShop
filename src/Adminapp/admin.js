@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { HashRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { useState,} from "react";
+import { HashRouter, Routes, Route, Link,} from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -53,9 +53,6 @@ const Adminapp = ()=>
     window.addEventListener('beforeunload', function () {
         localStorage.removeItem("SreeShoppermit");
     });
-
-
-    let[isLoginPage, pickloginpage] = useState(false);
 
     return(
         <HashRouter>
@@ -123,7 +120,7 @@ const Adminapp = ()=>
                                                         {(localStorage.getItem("userid") == null) ?
                                                             (
                                                                 <div className="col-xl-6 m-auto">
-                                                                    <Link to="/SreeShop/userlogin"> <button onClick={()=>pickloginpage(true)} className="btn btn-primary form-control  custom-btndropdown"> Login </button> </Link>  
+                                                                    <Link to="/SreeShop/userlogin"> <button className="btn btn-primary form-control  custom-btndropdown"> Login </button> </Link>  
                                                                 </div>
                                                             ):
                                                             (
