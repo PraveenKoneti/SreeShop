@@ -32,41 +32,61 @@ const Home = () =>
                         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
                         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="7" aria-label="Slide 8"></button>
                     </div>
+
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <Link to="/womens wear"> <img src="images/carousel/fashion.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/womens wear">
+                            <img src="images/carousel/fashion.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Women's wear" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/watches"> <img src="images/carousel/watch.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/watches">
+                            <img src="images/carousel/watch.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Watches" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/head phones"> <img src="images/carousel/airpods.jpg" className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/head phones">
+                            <img src="images/carousel/airpods.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Headphones" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/mobiles"> <img src="images/carousel/mobiles.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/mobiles">
+                            <img src="images/carousel/mobiles.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Mobiles" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/laptops"> <img src="images/carousel/laptops.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/laptops">
+                            <img src="images/carousel/laptops.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Laptops" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/footwear"> <img src="images/carousel/footwear.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/footwear">
+                            <img src="images/carousel/footwear.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Footwear" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/moisturizers"> <img src="images/carousel/moisturizer.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/moisturizers">
+                            <img src="images/carousel/moisturizer.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Moisturizers" />
+                        </Link>
                         </div>
                         <div className="carousel-item">
-                            <Link to="/bags"> <img src="images/carousel/lauguage.jpg"  className="d-block img-fluid" width="100%" height="auto" alt="" /> </Link>
+                        <Link to="/bags">
+                            <img src="images/carousel/lauguage.jpg" className="d-block img-fluid" width="100%" height="auto" alt="Bags" />
+                        </Link>
                         </div>
                     </div>
+
                     <button className="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
+
                     <button className="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
                     </button>
                 </div>
+
 
         
                 

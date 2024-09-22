@@ -9,6 +9,7 @@ import Myorders from "../nav/myorders";
 import Mywishlist from "../nav/mywishlist";
 import Cartlist from "../nav/cartlist";
 import Mybill from "../nav/mybill";
+import Rewards from "../nav/rewards";
 
 import Displaytype from "../displayitems/displaytype";
 import Displaysingle from "../displayitems/displaysingle";
@@ -114,7 +115,7 @@ const Adminapp = ()=>
                                                 <li className="mb-3"> <Link to="/myprofile" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-circle-user"></i> My Profile </Link> <i className="ms-2">Hi {localStorage.getItem("username")}</i> </li>
                                                 <li className="mb-3"> <Link to="/myorders" className="ms-3 text-decoration-none fs-6"> <i class="fa fa-database"></i>  My Orders</Link> </li>
                                                 <li className="mb-3"> <Link to="/mywishlist" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-heart"></i> Wishlist </Link> </li>
-                                                <li className="mb-3"> <Link className="ms-3 text-decoration-none fs-6"> <i className="fa fa-gift"></i> Rewards </Link> </li>
+                                                <li className="mb-3"> <Link to="/rewards" className="ms-3 text-decoration-none fs-6"> <i className="fa fa-gift"></i> Rewards </Link> </li>
                                                 <li className="mb-3 text-center">
                                                     <div className="row ms-2">
                                                         {(localStorage.getItem("userid") == null) ?
@@ -170,6 +171,7 @@ const Adminapp = ()=>
                 <Route exact path="/myprofile" element={ <Myprofile/> } />
                 <Route exact path="/myorders" element= { <Myorders/> } />
                 <Route exact path="/mywishlist" element= { <Mywishlist/> } />
+                <Route exact path="/rewards" element={ <Rewards/> } />
                 <Route exact path="/mybill" element= { <Mybill/> } />
 
                 <Route exact path="/userlogin" element={ <Userlogin/> } />
@@ -189,55 +191,176 @@ const Adminapp = ()=>
 
 
 
-                <footer className="bg-dark text-white mt-5 pt-5 pb-5">
-                    <div className="container">
-                        <div className="row">
-                                <div className="col-4 m-auto mt-0">
-                                    <div className="m-auto">
-                                        <h5 className="text-warning mb-3"> Get to Know Us </h5>
-                                        <p> Contact Us </p>
-                                        <p> Careers </p>
-                                        <p> Abouts Us </p>
-                                        <p> Corporate Information</p>
-                                    </div>
-                                </div>
-                                <div className="col-3 m-auto mt-0">
-                                    <div className="m-auto">
-                                        <h5 className="text-warning mb-3"> Connect With Us </h5>
-                                        <p> <i className="fab fa-facebook me-2"></i> facebook </p>
-                                        <p> <i className="fab fa-twitter me-2"></i> Twitter </p>
-                                        <p> <i className="fab fa-instagram me-2"></i> Instagram </p>
-                                        <p> <i className="fab fa-linkedin me-2"></i> Linkedin </p>
-                                    </div>
-                                </div>
-                                <div className="col-5 m-auto mt-0">
-                                    <div className="m-auto">
-                                        <h5 className="text-warning mb-3"> Registerd Office Address </h5>
-                                        <p> Address : No. 33, Covery Complex, 2nd Floor, infocampus Logics Pvt Ltd, 
-                                            Outer Ring Road, Marathahalli Bangalore Karnataka 560037. Near Kalamandir <br/>
-                                            <hr/>
-                                            Contact No : +91-8884166608. +91-9738001024 <br/>
-                                            E-Mail : hr.infocampus@gmail.com 
-                                        </p>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                </footer>
+            <footer className="bg-dark text-white mt-5 pt-5 pb-5">
+    <div className="container">
+        <div className="row">
+            {/* Get to Know Us Section */}
+            <div className="col-4 m-auto mt-0">
+                <div className="m-auto">
+                    <h5 className="text-warning mb-3">Get to Know Us</h5>
+                    <p>Contact Us</p>
+                    <p>Careers</p>
+                    <p>About Us</p>
+                    <p>Corporate Information</p>
+                </div>
+            </div>
+
+            {/* Connect With Us Section */}
+            <div className="col-3 m-auto mt-0">
+                <div className="m-auto">
+                    <h5 className="text-warning mb-3">Connect With Us</h5>
+                    <p>
+                        <a href="https://facebook.com" target="_blank" className="text-decoration-none text-white">
+                            <i className="fab fa-facebook me-2"></i> Facebook
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://twitter.com" target="_blank" className="text-decoration-none text-white">
+                            <i className="fab fa-twitter me-2"></i> Twitter
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://instagram.com" target="_blank" className="text-decoration-none text-white">
+                            <i className="fab fa-instagram me-2"></i> Instagram
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://www.linkedin.com/in/praveen-koneti/" target="_blank" className="text-decoration-none text-white">
+                            <i className="fab fa-linkedin me-2"></i> LinkedIn
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            {/* Registered Office Address Section */}
+            <div className="col-5 m-auto mt-0">
+                <div className="m-auto">
+                    <h5 className="text-warning mb-3">Registered Address</h5>
+                    <p>
+                        Address: #118/119, 1st Cross, 3rd Main, Hemanth Nagar, Kalamandir Back Side, Marthahalli, Bangalore - 560037
+                        <br />
+                        <hr />
+                        Contact No: +91-7995171323 <br />
+                        E-Mail: kr19pravin@gmail.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
             
             
-            <div className="offcanvas offcanvas-start custom-offcanvas" id="demo">
-                <div className="offcanvas-header">
-                    <h1 className="offcanvas-title">Heading</h1>
-                    <button type="button" className="btn-close btn-danger" data-bs-dismiss="offcanvas"></button> 
-                </div>
-                <div className="offcanvas-body">
-                    <p>Some text lorem ipsum.</p>
-                    <p>Some text lorem ipsum.</p>
-                    <p>Some text lorem ipsum.</p>
-                </div> 
+                <div
+    className="offcanvas offcanvas-start"
+    id="demo"
+    style={{
+        backgroundColor: '#f8f9fa',
+        color: '#343a40',
+        padding: '20px',
+        maxWidth: '75%',
+    }}
+>
+    <div className="offcanvas-header">
+        <h1 className="offcanvas-title" style={{ fontWeight: 'bold' }}>SreeShop Menu</h1>
+        <button
+            type="button"
+            className="btn-close btn-danger"
+            data-bs-dismiss="offcanvas"
+        ></button>
+    </div>
+    <div className="offcanvas-body">
+        <div style={{ marginBottom: '20px' }}>
+            <h5 style={{ fontWeight: 'bold' }}>Quick Links</h5>
+            <div className="row">
+                {[
+                    { name: 'Home', icon: 'home' },
+                    { name: 'My Profile', icon: 'user' },
+                    { name: 'My Orders', icon: 'shopping-bag' },
+                    { name: 'My Wishlist', icon: 'heart' }
+                ].map((link, index) => (
+                    <div className="col-12 col-md-6 mb-2" key={index}>
+                        <Link
+                            to={`/${link.name.toLowerCase().replace(' ', '')}`}
+                            className="d-block p-3 bg-light rounded text-center text-decoration-none shadow-sm"
+                            style={{ color: '#007bff' }}
+                        >
+                            <i className={`fa fa-${link.icon} me-2`}></i> {link.name}
+                        </Link>
+                    </div>
+                ))}
             </div>
+
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+            <h5 style={{ fontWeight: 'bold' }}>Login / Signup</h5>
+            <div className="d-flex flex-column mt-2">
+                <Link
+                    to="/userlogin"
+                    className="btn btn-primary btn-sm mb-2"
+                    style={{ backgroundColor: '#007bff', border: 'none' }}
+                >
+                    <i className="fa fa-user me-2"></i> Login
+                </Link>
+                <Link
+                    to="/usersignup"
+                    className="btn btn-success btn-sm"
+                    style={{ backgroundColor: '#28a745', border: 'none' }}
+                >
+                    <i className="fa fa-user-plus me-2"></i> Sign Up
+                </Link>
+            </div>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+            <h5 style={{ fontWeight: 'bold' }}>Contact Us</h5>
+            <p>If you have any questions, feel free to reach out!</p>
+            <p>Email: <a href="mailto:kr19pravin@gmail.com" style={{ textDecoration: 'none' }}>kr19pravin@gmail.com</a></p>
+            <p>Contact No: <strong>+91-7995171323</strong></p>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+            <h5 style={{ fontWeight: 'bold' }}>Follow Us</h5>
+            <div className="row text-center">
+                {/* LinkedIn Icon */}
+                <div className="col-3 mb-2">
+                    <a href="https://www.linkedin.com/in/praveen-koneti/" target="_blank" className="text-decoration-none">
+                        <i className="fab fa-linkedin fa-2x" style={{ color: '#007bff' }}></i>
+                    </a>
+                </div>
+                
+                {/* Twitter Icon */}
+                <div className="col-3 mb-2">
+                    <a href="https://twitter.com" target="_blank" className="text-decoration-none">
+                        <i className="fab fa-twitter fa-2x" style={{ color: '#1da1f2' }}></i>
+                    </a>
+                </div>
+                
+                {/* Facebook Icon */}
+                <div className="col-3 mb-2">
+                    <a href="https://facebook.com" target="_blank" className="text-decoration-none">
+                        <i className="fab fa-facebook fa-2x" style={{ color: '#1877f2' }}></i>
+                    </a>
+                </div>
+                
+                {/* Instagram Icon */}
+                <div className="col-3 mb-2">
+                    <a href="https://instagram.com" target="_blank" className="text-decoration-none">
+                        <i className="fab fa-instagram fa-2x" style={{ color: '#e4405f' }}></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
                   
             
 

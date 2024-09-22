@@ -1,6 +1,7 @@
 
 
-let host = 'http://localhost:7777';
+//let host = 'http://localhost:7777';
+let host = "https://sreeshopbackend.onrender.com"
 
 export const config = {
 

@@ -82,7 +82,6 @@ const Cartlist = () =>
     let[cemailerror, updatecemailerror] = useState("true");
     let[caddresserror, updatecaddresserror] = useState("true");
 
-    let[logedin, updatelogedin] = useState("true");
 
     let[customer, updatecustomer] = useState( { name: '', mobile: '', email: '', address: '', totalamount: 0, paymentmethod: '', itemslist: []} );
     
@@ -406,13 +405,20 @@ const Cartlist = () =>
                         </div>
                     </div>
 
+                    
+
                     <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4 co-xxl-4 ms-auto me-auto cartpay mt-3">
                         <div className="card border-0 shadow-lg">
                             <div className="card-header bg-warning p-2 text-white text-center"> <h3> <i class="fa-solid fa-hand-holding-dollar"></i> Price Details </h3> </div>
                             <div className="card-body border-0"> 
                                 <div className="row mb-2 m-0 p-0">
                                     <div className="col-6 mt-4 fs-5"> <p>Total Price </p> </div>
-                                    <div className="col-6 mt-4 fs-5 text-end"> <p> <b><i class="fa fa-indian-rupee-sign me-1"></i> {totalamount - discount} </b> </p> </div>
+                                    <div className="col-6 mt-4 fs-5 text-end"> <p> <b><i class="fa fa-indian-rupee-sign me-1"></i> {totalamount} </b> </p> </div>
+                                </div>
+
+                                <div className="row mb-2 m-0 p-0">
+                                    <div className="col-6 fs-5"> <p> Discount </p> </div>
+                                    <div className="col-6 fs-5 text-end"> <p> <b> - <i class="fa fa-indian-rupee-sign"></i> {discount} </b> </p> </div>
                                 </div>
 
                                 <div className="row mb-2 m-0 p-0">
@@ -425,26 +431,16 @@ const Cartlist = () =>
                                     <div className="col-6 fs-5 text-end"> <p> <b className="text-decoration-line-through"><i class="fa fa-indian-rupee-sign"></i> 160 </b> <b className="ms-3"> <i class="fa fa-indian-rupee-sign"></i> 100 </b>  </p> </div>
                                 </div>
 
-                                <div className="row mb-2 m-0 p-0">
-                                    <div className="col-6 fs-5"> <p> Discount </p> </div>
-                                    <div className="col-6 fs-5 text-end"> <p> <b> - <i class="fa fa-indian-rupee-sign"></i> {discount} </b> </p> </div>
-                                </div>
-
                                 <hr size={4} className="bg-dark" />
                             </div>
                             <div className="card-footer bg-black text-white pt-4 pb-4">
                                 <div className="row mb-4 m-0 p-0 bg-black">
                                     <div className="col-6 fs-5"> <p> <b> Amount Payable </b>  </p> </div>
-                                    <div className="col-6 fs-5 text-end"> <p> <b> <i class="fa fa-indian-rupee-sign"></i> {totalamount - discount} </b> </p> </div>
+                                    <div className="col-6 fs-5 text-end"> <p> <b> <i class="fa fa-indian-rupee-sign"></i> { (totalamount - discount ) + 100} </b> </p> </div>
                                 </div>
 
                                 <div className="row mb-2 m-0 p-0 bg-black">
-                                    {
-                                        (localStorage.getItem("userid") !== null) ?
-                                            (<button  className="btn btn-primary btn-md btn-sm btn-lg"  data-bs-toggle="modal" data-bs-target="#myModal"> Buy Now </button>) 
-                                            :
-                                            (<button onClick={obj=>updatelogedin()} className="btn btn-primary btn-md btn-sm btn-lg"> Buy Now </button>)
-                                    }
+                                    <button  className="btn btn-primary btn-md btn-sm btn-lg"  data-bs-toggle="modal" data-bs-target="#myModal"> Buy Now </button>
                                 </div>
                                 
                             </div>
