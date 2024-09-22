@@ -37,7 +37,6 @@ const Displaysingle = () =>
                     {
                         swal("Added to Cart Succesfully","","success")
                         .then(()=>{
-                            getwishlist();
                             getdata();
                         })  
                     }   
@@ -86,7 +85,6 @@ const Displaysingle = () =>
                     {
                         swal(messageinfo.message,"","success")
                         .then(()=>{
-                            getwishlist();
                             getdata();
                         })
                     }
@@ -101,7 +99,6 @@ const Displaysingle = () =>
                     {
                         swal(response.message,"","success")
                         .then(()=>{
-                            getwishlist();
                             getdata();
                         })
                     }
@@ -118,27 +115,18 @@ const Displaysingle = () =>
             }
         }
 
-
-
-        let[wishlist, pickwishlist] = useState( [] );
-        const getwishlist = async() =>
-        {
-            let response = await fetchData(`${config.getwishlist}?id=${localStorage.getItem("userid")}`)
-            pickwishlist( response );
-        }
     
         
-
         // RETRVING THAT PARTICULAR PRODUCT THAT STORED IN PICKITEMS
 
         const getdata = async() =>
         {
-            let response = await fetchData(`${config.getoneproduct}?producturl=${id}`)
-            pickproduct( response[0] )
+            let response = await fetchData(`${config.getoneproduct}?producturl=${id}&userid=${localStorage.getItem("userid")}`)
+            pickproduct( response )
         }
         
 
-        useEffect(()=>{getdata(); getwishlist();}, [category]);
+        useEffect(()=>{getdata();}, [category]);
 
         let[gocart, pickgocart] = useState(false)
 
@@ -151,9 +139,9 @@ const Displaysingle = () =>
                     <div className="row pt-4 pb-4 shadow-lg"> 
                         <div className="col-xl-5 col-xxl-5 col-lg-5 col-md-5 col-sm-5 pb-3 m-auto shadow-lg text-center">
                             <div className="row ps-2 pt-2">
-                                { (wishlist.find(obj => obj.productid === product._id)) ?
+                                { product.wishlistId !== '' ?
                                     (<i className="fa-solid fa-heart text-danger text-start"
-                                            onClick={addwishlist.bind(this, product, "delete", wishlist.find(obj => obj.productid === product._id) )} >                                                                 
+                                            onClick={addwishlist.bind(this, product, "delete", product.wishlistId )} >                                                                 
                                     </i>)
                                     :
                                     (<i className="fa-regular fa-heart text-start" onClick={addwishlist.bind(this, product, "add")}></i>)
