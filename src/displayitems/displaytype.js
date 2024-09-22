@@ -179,7 +179,7 @@ const Displaytype = () => {
                                         </p>
                                         {product.productactive === 'In Stock' && (
                                             <span  className="text-white p-2 ps-2 pe-2 productoffer" style={{ borderRadius: "50%", background: 'red' }}>
-                                                Rs {Math.round(product.productprice * 0.5)} off /__ {/* 50% off */}
+                                                Rs {Math.round(product.productprice * 0.05)} off /__ {/* 50% off */}
                                             </span>
                                         )}
                                         <div className="text-center col-sm-4 mt-2 mb-2">
