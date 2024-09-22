@@ -27,6 +27,18 @@ const Adminapp = ()=>
     let[searchkey, picksearchkey] = useState('');
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
+    const Logout = () =>
+    {
+        localStorage.clear();
+        window.location.reload();
+    }
+    
+    const Sellerpage = () => {
+        localStorage.setItem("SreeShoppermit", "sellerlogin");
+        const sellerPageUrl = "SreeShop/becomeseller"; // Replace with your seller page URL
+        window.open(sellerPageUrl, "_blank");
+    }
+
 
     const handleInputChange = async(e) => {
         const value = e.target.value;
@@ -370,15 +382,3 @@ const Adminapp = ()=>
 }
 
 export default Adminapp;
-
-const Logout = () =>
-{
-    localStorage.clear();
-    window.location.reload();
-}
-
-const Sellerpage = () => {
-    localStorage.setItem("SreeShoppermit", "sellerlogin");
-    const sellerPageUrl = "SreeShop/becomeseller"; // Replace with your seller page URL
-    window.open(sellerPageUrl, "_blank");
-}
