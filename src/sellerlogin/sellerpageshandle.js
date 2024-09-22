@@ -6,7 +6,7 @@ const Handlesellerpage = () => {
 
     useEffect(() => {
         localStorage.setItem("SreeShoppermit", "sellerlogin");
-
+        window.location.reload();
         return () => {
             // Cleanup localStorage when leaving seller flow
             localStorage.removeItem("SreeShoppermit");

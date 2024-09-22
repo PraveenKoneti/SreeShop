@@ -51,9 +51,9 @@ const Adminapp = ()=>
     }
 
 
-    window.addEventListener('beforeunload', function () {
-        localStorage.removeItem("SreeShoppermit");
-    });
+    // window.addEventListener('beforeunload', function () {
+    //     localStorage.removeItem("SreeShoppermit");
+    // });
 
     return(
         <HashRouter>
@@ -373,7 +373,6 @@ const Logout = () =>
 
 const Sellerpage = () => {
     localStorage.setItem("SreeShoppermit", "sellerlogin");
-    //window.location.reload();
     const sellerPageUrl = "/becomeseller"; // Replace with your seller page URL
     window.open(sellerPageUrl, "_blank");
     
