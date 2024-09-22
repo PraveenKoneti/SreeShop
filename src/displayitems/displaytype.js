@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import { deleteData, fetchData, postData } from "../Api/apihandler";
 import { config } from "../config";
 import { Paginator } from 'primereact/paginator';
+import { Toast } from 'primereact/toast'; // Import Toast component
+
 
 const Displaytype = () => {
     let { category } = useParams();
@@ -17,8 +19,21 @@ const Displaytype = () => {
     const [first, setFirst] = useState(0); // First record index
     const [rows, setRows] = useState(10); // Rows per page
 
+    const toastRef = useRef(null); // Create a ref for the toast
+
+    const showToast = (severity, detail, isLoading = false) => {
+        const content = (
+            <div className="d-flex flex-column align-items-start">
+                {isLoading && <span className="spinner-border me-2" role="status"></span>}
+                <span>{detail}</span>
+            </div>
+        );
+        toastRef.current.show({ severity, summary: null, detail: content });
+    };
+
     const addwishlist = async (product, status) => {
         if (localStorage.getItem("userid") != null) {
+            showToast('info', 'Adding product in Wishlist...', true); // Show loading toast
             if (status === "add") {
                 let newwishlist = {
                     userid: localStorage.getItem("userid"),
@@ -32,6 +47,7 @@ const Displaytype = () => {
                     productimage: product.productimage
                 };
                 let messageinfo = await postData(config.savewishlist, newwishlist);
+                toastRef.current.clear();
                 if (messageinfo && messageinfo !== "") {
                     swal(messageinfo.message, "", "success")
                         .then(() => {
@@ -61,6 +77,7 @@ const Displaytype = () => {
 
     const addcart = async (product) => {
         if (localStorage.getItem("userid") != null) {
+            showToast('info', 'Adding product in Cartlist...', true); // Show loading toast
             if (product.productactive === "In Stock") {
                 let newcartdata = {
                     userid: localStorage.getItem("userid"),
@@ -75,6 +92,7 @@ const Displaytype = () => {
                     productimage: product.productimage
                 };
                 let response = await postData(config.savecartlist, newcartdata);
+                toastRef.current.clear();
                 if (response.message === "yes") {
                     swal("Added to Cart Successfully", "", "success")
                         .then(() => {
@@ -106,10 +124,12 @@ const Displaytype = () => {
     };
 
     const getdata = async (first, rows) => {
+        showToast('info', 'Fetching products...', true); // Show loading toast
         let response = await fetchData(`${config.getproducts}?searchcategoryname=${searchcategoryname}&searchbrandname=${searchbrandname ? searchbrandname : null}&skip=${first}&limit=${rows}&user=${localStorage.getItem("userid")}`);
         pickitems(response.products);
         setbrandlist(response.brands);
         setItemsCount(response.total);
+        toastRef.current.clear(); // Clear the toast  // Adjust the duration as needed (2000 ms = 2 seconds)
     };
 
     // Pagination event handler
@@ -133,6 +153,7 @@ const Displaytype = () => {
 
     return (
         <div className="container">
+            <Toast ref={toastRef} position="center" /> {/* Include the Toast component */}
             <div className="row mt-4">
                 <div className="col-4 ms-auto me-auto">
                     <div className="row shadow-lg p-2 pb-3 pt-2 custom-brandnames">
@@ -157,8 +178,17 @@ const Displaytype = () => {
                 <div className="col-8 ms-auto me-auto custom-displaytypeproducts">
                     <div className="row">
                         {items.map((product, index) => (
-                            <div className="col-sm-12 col-lg-12 mb-4" key={index}>
+                            <div className="col-sm-12 col-lg-12 mb-2" key={index}>
                                 <div className="row p-1 m-auto">
+                                    <div className="row ps-2 pb-2">
+                                        { product.wishlistId !== ' ' ?
+                                            (<i className="fa-solid fa-heart text-danger text-start fs-5"
+                                                    onClick={addwishlist.bind(this, product, "delete", product.wishlistId)} >                                                                 
+                                            </i>)
+                                            :
+                                            (<i className="fa-regular fa-heart text-start fs-5" onClick={addwishlist.bind(this, product, "add")}></i>)
+                                        }      
+                                    </div>
                                     <div className="col-sm-3 text-center">
                                         <Link to={`/${product.categoryname}/${product.producturl}`}>
                                             <img 
@@ -179,7 +209,7 @@ const Displaytype = () => {
                                         </p>
                                         {product.productactive === 'In Stock' && (
                                             <span  className="text-white p-2 ps-2 pe-2 productoffer" style={{ borderRadius: "50%", background: 'red' }}>
-                                                Rs {Math.round(product.productprice * 0.05)} off /__ {/* 50% off */}
+                                                Rs {Math.round(product.productprice * 0.05)} off /__ {/* 5% off */}
                                             </span>
                                         )}
                                         <div className="text-center col-sm-4 mt-2 mb-2">
@@ -200,6 +230,7 @@ const Displaytype = () => {
                         ))}
                     </div>
                 </div>
+
 
                 <div className="paginator-container mt-3">
                     <Paginator
