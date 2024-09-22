@@ -30,7 +30,7 @@ const Userlogin = () =>
                 localStorage.setItem('usertoken', userinfo.token);
                 swal("Login Successfull", "Credentials are Matched Successfully", "success")
                 .then(() => {
-                    localStorage.setItem("userlogin", "false");
+                    localStorage.setItem("userlogin", "true");
                     window.location.reload();    // Reload the page
                     
                 });
@@ -44,8 +44,8 @@ const Userlogin = () =>
         }
     }
 
-    if (loggedIn)
-        return <Navigate to="/home" />;
+    // if (loggedIn)
+    //     return <Navigate to="/home" />;
 
 
     return(
