@@ -44,8 +44,8 @@ const Userlogin = () =>
         }
     }
 
-    // if (loggedIn)
-    //     return <Navigate to="/home" />;
+    if (loggedIn)
+        return <Navigate to="/home" />;
 
 
     return(

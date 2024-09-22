@@ -56,7 +56,7 @@ const Adminapp = ()=>
     // });
 
     return(
-        <BrowserRouter>
+        <HashRouter>
                 <nav className="sticky-top">
                     <nav className="navbar navbar-expand-sm navbar-dark p-1 bg-dark">
                         <div className="container">
@@ -183,7 +183,7 @@ const Adminapp = ()=>
 
                 <Route exact path="/becomeseller" element={ <Handlesellerpage/> } />
 
-                {localStorage.getItem("userlogin") === "true" && <Route path="/home" element={<Navigate to="/home" replace />} />}
+                {localStorage.getItem("userlogin") === "true" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
                 {/*localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />} */}
 
             </Routes>
@@ -358,7 +358,7 @@ const Adminapp = ()=>
         </div>
 
 
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
