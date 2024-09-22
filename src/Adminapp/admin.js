@@ -183,8 +183,8 @@ const Adminapp = ()=>
 
                 <Route exact path="/becomeseller" element={ <Handlesellerpage/> } />
 
-                {/* {localStorage.getItem("userlogin") === "false" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
-                {localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />} */}
+                 {localStorage.getItem("userlogin") === "false" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
+                {/*localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />} */}
 
             </Routes>
 
