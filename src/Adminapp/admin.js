@@ -1,5 +1,5 @@
 import { useState,} from "react";
-import { HashRouter, Routes, Route, Link,} from "react-router-dom";
+import { HashRouter,BrowserRouter, Routes, Route, Link,} from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -56,7 +56,7 @@ const Adminapp = ()=>
     // });
 
     return(
-        <HashRouter>
+        <BrowserRouter>
                 <nav className="sticky-top">
                     <nav className="navbar navbar-expand-sm navbar-dark p-1 bg-dark">
                         <div className="container">
@@ -358,7 +358,7 @@ const Adminapp = ()=>
         </div>
 
 
-        </HashRouter>
+        </BrowserRouter>
     )
 }
 

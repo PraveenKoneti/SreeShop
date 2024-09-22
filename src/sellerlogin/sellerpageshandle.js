@@ -7,10 +7,10 @@ const Handlesellerpage = () => {
     useEffect(() => {
         localStorage.setItem("SreeShoppermit", "sellerlogin");
         window.location.reload();
-        return () => {
-            // Cleanup localStorage when leaving seller flow
-            localStorage.removeItem("SreeShoppermit");
-        };
+        // return () => {
+        //     // Cleanup localStorage when leaving seller flow
+        //     localStorage.removeItem("SreeShoppermit");
+        // };
     }, []);
 
     // Redirect to home page if not in seller flow
