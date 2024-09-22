@@ -183,8 +183,8 @@ const Adminapp = ()=>
 
                 <Route exact path="/becomeseller" element={ <Handlesellerpage/> } />
 
-                {localStorage.getItem("userlogin") === "false" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
-                {localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
+                {/* {localStorage.getItem("userlogin") === "false" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
+                {localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />} */}
 
             </Routes>
 
@@ -373,7 +373,8 @@ const Logout = () =>
 
 const Sellerpage = () => {
     localStorage.setItem("SreeShoppermit", "sellerlogin");
-    const sellerPageUrl = "/becomeseller"; // Replace with your seller page URL
-    window.open(sellerPageUrl, "_blank");
+    //window.location.reload();
+    // const sellerPageUrl = "/becomeseller"; // Replace with your seller page URL
+    // window.open(sellerPageUrl, "_blank");
     
 }
