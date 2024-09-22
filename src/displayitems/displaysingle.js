@@ -9,6 +9,8 @@ const Displaysingle = () =>
 {
         let{category, id} = useParams();
         let[product, pickproduct] = useState({});
+        let [islogin, setislogin] = useState(true);
+
 
         //  CHECKING CART THAT PARTICULAR PRODUCT IS THER OR NOT ?
 
@@ -53,7 +55,7 @@ const Displaysingle = () =>
             {
                 swal("Please Login / Signup","You have Account Login / Signup","warning")
                 .then(()=>{
-                    login();
+                    setislogin(false);
                 })
             }
         }
@@ -110,7 +112,7 @@ const Displaysingle = () =>
             {
                 swal("Please Login / Signup","You have Account Login / Signup","warning")
                 .then(()=>{
-                    login();
+                    setislogin(false);
                 })
             }
         }
@@ -132,6 +134,9 @@ const Displaysingle = () =>
 
         if(gocart === true)
             return <Navigate to="/cartlist" />
+
+        if(islogin === false)
+            return <Navigate to="/userlogin" />
 
         return(
             <div className="container">

@@ -181,7 +181,7 @@ const Displaytype = () => {
                             <div className="col-sm-12 col-lg-12 mb-2" key={index}>
                                 <div className="row p-1 m-auto">
                                     <div className="row ps-2 pb-2">
-                                        { product.wishlistId !== ' ' ?
+                                        { product.isInWishlist ?
                                             (<i className="fa-solid fa-heart text-danger text-start fs-5"
                                                     onClick={addwishlist.bind(this, product, "delete", product.wishlistId)} >                                                                 
                                             </i>)
