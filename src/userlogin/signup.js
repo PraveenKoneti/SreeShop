@@ -249,10 +249,17 @@ const Usersignup = () =>
 
 
     return(
-        <div className="container">
-            <div className="row p-2 mt-4">
+        <div className="p-2"style={{
+            backgroundImage: 'url("/usersignup.jpg")', 
+            width: 'auto', 
+            backgroundSize: 'cover', 
+            height: 'auto', 
+            backgroundPosition: 'center', 
+            backgroundRepeat: 'no-repeat'}}>
+            <div className="row p-2 mt-2">
                     <div className="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xl-4"></div>
-                    <div className="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xl-4 shadow-lg pb-3 m-auto">
+                    <div className="col-lg-3 col-sm-3 col-md-3 col-xl-3 col-xl-3"></div>
+                    <div className="col-lg-4 col-sm-4 text-white col-md-4 col-xl-4 col-xl-4 shadow-lg pb-3 m-auto" style={{ background: "rgba(0, 0, 0, 0.5)", opacity: 0.9 }}>
                         <h1 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12  text-center mb-4 mt-4"><i className="fa fa-shopping-bag text-warning"></i> SreeShop</h1>
                         <h6 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12 text-center text-primary mb-4"> <i className="fa fa-user"></i> Create your account </h6>
                         
@@ -346,12 +353,10 @@ const Usersignup = () =>
                             </div>
                         </div>
 
-                        <button className="btn btn-primary form-control border rounded-pill mb-3 mt-1" disabled={!fname || !lname || !mobile || !email || !gender || !password || !cpassword} onClick={sendemail} data-bs-toggle="modal" data-bs-target="#myModal"> Sign Up </button>
+                        <div className="text-center">  <button style={{opacity: 10 }} className="btn col-6  btn-primary form-control text-white border rounded-pill mb-3 mt-1" disabled={!fname || !lname || !mobile || !email || !gender || !password || !cpassword} onClick={sendemail} data-bs-toggle="modal" data-bs-target="#myModal"> Sign Up </button> </div>
                         <p className="text-center"> Or </p>
-                        <p className="text-center"> Already have an account? <Link to="/userlogin"> <b className="text-primary ms-2"> Login</b> </Link> </p>
+                        <p className="text-center" style={{opacity: 10 }}> Already have an account? <Link to="/userlogin"> <b className="text-primary ms-2"> Login</b> </Link> </p>
                     </div>
-
-                    <div className="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xl-4"></div>
             </div>
 
 

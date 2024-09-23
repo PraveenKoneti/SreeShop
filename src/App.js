@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap'; // Bootstrap Modal and Button
 import 'primeicons/primeicons.css'; // Import PrimeIcons CSS
 import Adminapp from './Adminapp/admin';
+import Useraccount from './userlogin/useraccount';
+
 import Sellerapp from './sellerdetails/sellerapp';
 import Selleraccount from './sellerlogin/selleraccount';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
@@ -25,7 +27,7 @@ function App() {
     if (localStorage.getItem("SreeShoppermit") === "sellerlogin") {
         content = localStorage.getItem("sellerid") === null ? <Selleraccount /> : <Sellerapp />;
     } else {
-        content = <Adminapp />;
+        content = localStorage.getItem('userlogin') === false? <Useraccount/> : <Adminapp /> ;
     }
 
     return (

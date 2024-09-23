@@ -191,7 +191,7 @@ const Adminapp = ()=>
 
 
 
-            <footer className="bg-dark text-white mt-5 pt-5 pb-5">
+            <footer className="bg-dark text-white pt-5 pb-5">
                 <div className="container">
                     <div className="row">
                         {/* Get to Know Us Section */}
@@ -363,6 +363,12 @@ const Adminapp = ()=>
 }
 
 export default Adminapp;
+
+
+const userLogin = () =>{
+    localStorage.setItem("userlogin", false);
+    window.location.reload();
+}
 
 
 const Logout = () =>

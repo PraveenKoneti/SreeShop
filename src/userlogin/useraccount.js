@@ -9,7 +9,7 @@ const Useraccount = () => {
         <HashRouter>
 
             <Routes>
-                {localStorage.getItem("userlogin") === "true" && <Route path="/*" element={<Navigate to="/userlogin" replace />} />}
+                {localStorage.getItem("userlogin") === "false" && <Route path="/*" element={<Navigate to="/userlogin" replace />} />}
                 <Route path="/userlogin" element={<Userlogin />} />
                 <Route path="/usersignup" element={<UserSignup />} />
             </Routes>

@@ -1,15 +1,30 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import { deleteData, fetchData, postData } from "../Api/apihandler";
 import { config } from "../config";
+import { Toast } from 'primereact/toast'; // Import Toast component
+
 
 const Displaysingle = () =>
 {
         let{category, id} = useParams();
         let[product, pickproduct] = useState({});
         let [islogin, setislogin] = useState(true);
+        
+
+        const toastRef = useRef(null); // Create a ref for the toast
+
+        const showToast = (severity, detail, isLoading = false) => {
+            const content = (
+                <div className="d-flex flex-column align-items-start">
+                    {isLoading && <span className="spinner-border me-2" role="status"></span>}
+                    <span>{detail}</span>
+                </div>
+            );
+            toastRef.current.show({ severity, summary: null, detail: content });
+        };
 
 
         //  CHECKING CART THAT PARTICULAR PRODUCT IS THER OR NOT ?
@@ -123,8 +138,10 @@ const Displaysingle = () =>
 
         const getdata = async() =>
         {
+            showToast('info', 'Fetching product...', true); // Show loading toast
             let response = await fetchData(`${config.getoneproduct}?producturl=${id}&userid=${localStorage.getItem("userid")}`)
             pickproduct( response )
+            toastRef.current.clear(); 
         }
         
 
@@ -140,6 +157,7 @@ const Displaysingle = () =>
 
         return(
             <div className="container">
+                <Toast ref={toastRef} position="center" /> {/* Include the Toast component */}
                 <div className="row mt-2">
                     <div className="row pt-4 pb-4 shadow-lg"> 
                         <div className="col-xl-5 col-xxl-5 col-lg-5 col-md-5 col-sm-5 pb-3 m-auto shadow-lg text-center">
