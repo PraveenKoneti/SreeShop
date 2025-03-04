@@ -16,15 +16,27 @@ const Displaysingle = () =>
 
         const toastRef = useRef(null); // Create a ref for the toast
 
-        const showToast = (severity, detail, isLoading = false) => {
+        const showToast = (severity, detail, isLoading = false, summary) => {
             const content = (
-                <div className="d-flex flex-column align-items-start">
-                    {isLoading && <span className="spinner-border me-2" role="status"></span>}
+                <div className="d-flex align-items-center">
                     <span>{detail}</span>
+                    {isLoading && (
+                        <div className="loader-dots ms-2" > {/* Remove margin */}
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    )}
                 </div>
             );
-            toastRef.current.show({ severity, summary: null, detail: content });
+            toastRef.current.show({ severity, summary: summary, detail: content });
         };
+        
+        
+
+
+
 
 
         //  CHECKING CART THAT PARTICULAR PRODUCT IS THER OR NOT ?
@@ -33,46 +45,50 @@ const Displaysingle = () =>
         {
             if(localStorage.getItem("userid") != null)
             {
-                let newcartdata = {
-                    userid              :  localStorage.getItem("userid"),
-                    productid           :  product._id,
-                    sellerid            :  product.sellerid,
-                    brandname           :  product.brandname,
-                    categoryname        :  product.categoryname,
-                    productname         :  product.productname,          
-                    productprice        :  product.productprice,
-                    productquantity     :  1,
-                    productactive       :  product.productactive,
-                    productimage        :  product.productimage
-                }
-                let response = await postData(config.savecartlist, newcartdata)
-                if (response.message === "yes") 
+                if(product.productactive === 'InStock')
                 {
-                    if(buy !=="")
-                        pickgocart(true);
-                    else
-                    {
-                        swal("Added to Cart Succesfully","","success")
-                        .then(()=>{
-                            getdata();
-                        })  
-                    }   
+                    showToast('info','Adding Product in Cartlist', true); // Show loading toast
+                    let newcartdata = {
+                        userid              :  localStorage.getItem("userid"),
+                        productid           :  product._id,
+                        sellerid            :  product.sellerid,
+                        brandname           :  product.brandname,
+                        categoryname        :  product.categoryname,
+                        productname         :  product.productname,          
+                        productprice        :  product.productprice,
+                        productquantity     :  1,
+                        productactive       :  product.productactive,
+                        productimage        :  product.productimage
+                    }
+                    await postData(config.savecartlist, newcartdata)
+                    .then(response => {
+                        toastRef.current.clear(); 
+                        if (response.message === "yes") 
+                        {
+                            if(buy !=="")
+                                pickgocart(true);
+                            else
+                            {
+                                showToast("success","Added to Cart Succesfully")
+                                setTimeout(() => {
+                                    getdata();
+                                }, 1500);
+                            }   
+                        }
+                        else
+                        {
+                            if(buy === "buynow")
+                                pickgocart(true);
+                            else
+                                showToast("warn","This Product Already Existed in Cart");
+                        }
+                    })
                 }
-                else
-                {
-                    if(buy === "buynow")
-                        pickgocart(true);
-                    else
-                        swal("This Product Already Existed in Cart","","warning");
-                }
+                else 
+                    showToast("warn", "Product out of stock, buy after some time",false,"Out Of Stock");
             }
             else
-            {
-                swal("Please Login / Signup","You have Account Login / Signup","warning")
-                .then(()=>{
-                    setislogin(false);
-                })
-            }
+                showToast("warn","If You have Account Please Login",false,"Please Login / Signup",)
         }
 
 
@@ -80,12 +96,13 @@ const Displaysingle = () =>
 
         //   THAT PARTICULAR PRODUCT SHOULD BE ADDED TO WISHLIST
 
-        const addwishlist = async(product, status, wishlistdata="") =>
+        const addwishlist = async(product, status, wishlistId="") =>
         {
             if(localStorage.getItem("userid") != null)
             {
                 if(status === "add" )
                 { 
+                    showToast('info','Adding Product in Wishlist', true); // Show loading toast
                     let newwishlist = {
                         userid              :  localStorage.getItem("userid"),
                         productid           :  product._id,
@@ -97,39 +114,43 @@ const Displaysingle = () =>
                         productactive       :  product.productactive,
                         productimage        :  product.productimage
                     }
-                    let messageinfo = await postData(config.savewishlist, newwishlist)
-                    if(messageinfo && messageinfo.message !== "")
-                    {
-                        swal(messageinfo.message,"","success")
-                        .then(()=>{
-                            getdata();
-                        })
-                    }
-                    else 
-                        swal("Internal Server Error",'',"warning");
+                    await postData(config.savewishlist, newwishlist)
+                    .then(messageinfo => {
+                        toastRef.current.clear(); 
+                        if(messageinfo && messageinfo.message !== "")
+                        {
+                            showToast("success",messageinfo.message);
+                            setTimeout(() => {
+                                toastRef.current.clear(); 
+                                getdata();
+                            }, 1500);
+                        }
+                        else 
+                            showToast("warn","Internal Server Error");
+                    })
                 }
                 else
                 {
-                    console.log("\n products _____",product,"\n wishlist data ____", wishlistdata)
-                    let response = await deleteData(`${config.deletewishlist}/${wishlistdata._id}`)
-                    if(response && response.message !== "")
-                    {
-                        swal(response.message,"","success")
-                        .then(()=>{
-                            getdata();
-                        })
-                    }
-                    else 
-                        swal("Internal Server Error",'',"warning");
-                }
+                    showToast('info', 'Deleting Product from Wishlist', true); // Show loading toast
+                    await deleteData(`${config.deletewishlist}/${wishlistId}`)
+                    .then(response => {
+                        toastRef.current.clear(); 
+                        if(response && response.message !== "")
+                        {
+                            showToast("success",response.message)
+                            setTimeout(() => {
+                                toastRef.current.clear(); 
+                                getdata();
+                            }, 1500);
+                        }
+                        else 
+                            showToast("warn","Internal Server Error");
+                    })
+                } 
             }
             else
-            {
-                swal("Please Login / Signup","You have Account Login / Signup","warning")
-                .then(()=>{
-                    setislogin(false);
-                })
-            }
+                swal("warn","You have Account Login / Signup",false,"Please Login / Signup")
+                
         }
 
     
@@ -138,10 +159,12 @@ const Displaysingle = () =>
 
         const getdata = async() =>
         {
-            showToast('info', 'Fetching product...', true); // Show loading toast
-            let response = await fetchData(`${config.getoneproduct}?producturl=${id}&userid=${localStorage.getItem("userid")}`)
-            pickproduct( response )
-            toastRef.current.clear(); 
+            showToast('info', 'Fetching product', true); // Show loading toast
+            await fetchData(`${config.getoneproduct}?producturl=${id}&userid=${localStorage.getItem("userid")}`)
+            .then(response => {
+                pickproduct( response )
+                toastRef.current.clear(); 
+            })  
         }
         
 
@@ -152,12 +175,10 @@ const Displaysingle = () =>
         if(gocart === true)
             return <Navigate to="/cartlist" />
 
-        if(islogin === false)
-            return <Navigate to="/userlogin" />
 
         return(
             <div className="container">
-                <Toast ref={toastRef} position="center" /> {/* Include the Toast component */}
+                <Toast ref={toastRef} position="center" className="custom-toast" /> {/* Include the Toast component */}
                 <div className="row mt-2">
                     <div className="row pt-4 pb-4 shadow-lg"> 
                         <div className="col-xl-5 col-xxl-5 col-lg-5 col-md-5 col-sm-5 pb-3 m-auto shadow-lg text-center">

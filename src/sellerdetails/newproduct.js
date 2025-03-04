@@ -271,8 +271,8 @@ const Mynewproduct = () =>
                                             style={{border: (pactive=="")?(pactiveerror=="wrong")?'4px solid red':'':'', boxShadow: (pactive=="")?(pactiveerror=="wrong")?'0px 0px 5px red':'':''}}
                                         >
                                             <option value=""> Choose </option>
-                                            <option> In Stock </option>
-                                            <option> Not in Stock </option>
+                                            <option> InStock </option>
+                                            <option> OutOfStock </option>
                                         </select>
                                 </div>
                             </div>

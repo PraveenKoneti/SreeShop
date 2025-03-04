@@ -8,94 +8,102 @@ const Productinstock = () => {
   let inStockProducts = useRef([]);
   let [productcount, pickproductcount] = useState(0);
   let [instockcount, pickinstockcount] = useState(0);
+  let [outofstockcount, pickoutofstockcount] = useState(0);
   const chartRef = useRef(null); // Ref for chart DOM element
 
-  // Function to initialize and update the gauge chart
-  const instock = () => {
+  // Function to initialize and update the horizontal bar chart
+  const renderBarChart = () => {
     const chartDom = chartRef.current; // Use ref for chart DOM
     if (!chartDom) return;
 
     const myChart = echarts.init(chartDom);
 
-    const inStockText = productcount === 0 ? '0/0' : `${instockcount}/${productcount}`;
+    const outOfStockCount = outofstockcount;
+    const inStockCount = instockcount;
 
     const option = {
       title: {
-        text: 'In Stock',
-        top: '5%',
+        text: 'Product Stock Status',
         left: 'center',
+        top: '5%',
         textStyle: {
-          color: 'green',
           fontSize: 25,
         },
       },
+      tooltip: {
+        trigger: 'item',
+      },
       legend: {
-        data: ['In Stock'], // Ensure this matches the series name
+        data: ['In Stock', 'Out of Stock'],
+        bottom: '2%',
         left: 'center',
-        bottom: '2%',  // Position legend at the bottom
-        itemWidth: 20,  // Increase item width for better readability
-        itemHeight: 20, // Increase item height for better readability
         textStyle: {
-          fontSize: 16,
-          color: 'black' // Make the legend text red
+          fontSize: 14,
         },
-        formatter: (name) => {
-          // Format legend text with the outOfStockText
-          return `${name}: ${inStockText}`;
+      },
+      xAxis: {
+        type: 'value',
+        splitLine: {
+          show: false,
         },
-        itemStyle: {
-            color: 'green',  // Set the icon color to red
-        }
+        axisLine: {
+          show: true, // Show the x-axis line
+          lineStyle: {
+            color: '#000', // Color of the x-axis line
+            width: 2,      // Width of the x-axis line
+          },
+        },
+      },
+      yAxis: {
+        type: 'category',
+        data: ['In', 'Out'], // Updated labels for In Stock and Out of Stock
+        axisLabel: {
+          fontSize: 14, // Adjust font size for clarity
+          margin: 10,   // Add margin to avoid overlap
+        },
+        axisLine: {
+          show: true, // Show the y-axis line
+          lineStyle: {
+            color: '#000', // Color of the y-axis line
+            width: 2,      // Width of the y-axis line
+          },
+        },
       },
       series: [
         {
-          name: 'In Stock',
-          type: 'gauge',
-          startAngle: 90,
-          endAngle: -270,
-          progress: {
+          name: 'In Stock', // First series
+          type: 'bar',
+          data: [inStockCount, 0], // In Stock count only
+          itemStyle: {
+            color: 'green',
+          },
+          barWidth: '30%',
+          label: {
             show: true,
-            width: 25,
-            itemStyle: {
-              color: 'green',
-            },
+            position: 'insideRight',
+            formatter: '{c}', 
+            fontSize: 16,
+            color: '#fff',
           },
-          axisLine: {
-            lineStyle: {
-              width: 25,
-              color: [[1, '#999']],
-            },
-          },
-          axisTick: {
-            show: false,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          pointer: {
-            show: false,
-          },
-          title: {
-            show: false,
-          },
-          detail: {
-            valueAnimation: true,
-            formatter: () => inStockText, // Use function for formatter
-            color: 'red',
-            fontSize: 35,
-            offsetCenter: [0, 0],
-          },
-          data: [
-            {
-              // Round the value to remove the dot by converting to an integer
-              value: productcount === 0 ? 0 : Math.round((instockcount / productcount) * 100),
-            },
-          ],
         },
-      ],
+        {
+          name: 'Out of Stock', // Second series
+          type: 'bar',
+          data: [0, outOfStockCount], // Out of Stock count only
+          itemStyle: {
+            color: 'red',
+          },
+          barWidth: '30%',
+          label: {
+            show: true,
+            position: 'insideRight',
+            formatter: '{c}', 
+            fontSize: 16,
+            color: '#fff',
+          },
+        },
+      ]
+      
     };
 
     myChart.setOption(option);
@@ -111,29 +119,36 @@ const Productinstock = () => {
     };
   };
 
+  const getoutofstock = async () => {
+    await fetchData(`${config.outofstockcount}?id=${localStorage.getItem('sellerid')}`)
+      .then((res) => {
+        pickoutofstockcount(res.outofstockcount);
+      })
+      .catch((error) => console.error('Error fetching out of stock count:', error));
+  };
+
   const getinstockcount = async () => {
     await fetchData(`${config.instockcount}?id=${localStorage.getItem('sellerid')}`)
       .then((res) => {
         pickinstockcount(res.instockcount);
         pickproductcount(res.productcount);
       })
-      .catch((error) => console.error('Error fetching stock count:', error));
+      .catch((error) => console.error('Error fetching in stock count:', error));
   };
 
   useEffect(() => {
     getinstockcount();
+    getoutofstock();
   }, []);
 
   // Ensure the chart renders after state update
   useEffect(() => {
-    instock();
-  }, [productcount, instockcount]);
-
-  if (inStockProducts.current.length > 0) return <Navigate to="/chartsdata" state={{ inStockProducts }} replace />;
+    renderBarChart();
+  }, [productcount, instockcount, outofstockcount]);
 
   return (
     <div className="pb-3" style={{ width: '100%', height: 'auto' }}>
-      <div id="main4" ref={chartRef} style={{ width: '100%', maxWidth: '600px', height: '400px', margin: '0 auto' }}></div>
+      <div id="main4" ref={chartRef} style={{ width: '100%', maxWidth: '600px', height: '420px', margin: '0 auto' }}></div>
     </div>
   );
 };

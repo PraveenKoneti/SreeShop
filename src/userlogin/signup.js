@@ -1,16 +1,43 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
-import Login from "./login";
 import { Navigate } from "react-router-dom";
 import { InputOtp } from 'primereact/inputotp'; 
+import { Toast } from 'primereact/toast';
 
 import { config } from "../config";
 import { register, postData } from "../Api/apihandler";
 
+import { Modal, Button } from 'react-bootstrap';
+
 const Usersignup = () =>
 {
+    const [showModal, setShowModal] = useState(false);
+    const toastRef = useRef(null); // Reference for the Toast
+
+
+    const showToast = (severity, detail, isLoading = false) => {
+        const content = (
+            <div className="d-flex align-items-center">
+                <span>{detail}</span>
+                {isLoading && (
+                    <div className="loader-dots ms-2" > {/* Remove margin */}
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                )}
+            </div>
+        );
+        toastRef.current.show({ severity, summary: null, detail: content });
+    };
+
+
+
+
+
 
     let[fname, pickfname] = useState("");
     let[fnameerror, pickfnameerror] = useState("");
@@ -133,18 +160,32 @@ const Usersignup = () =>
 
     const sendemail = async() =>
     {
-        if((fnameerror == "correct") && (lnameerror == "correct") && (mobileerror == "correct") && (emailerror == "correct") && (gendererror == "correct") && (passworderror == "correct"))
+        if((fnameerror === "correct") && (lnameerror === "correct") && (mobileerror === "correct") && (emailerror === "correct") && (gendererror === "correct") && (passworderror === "correct"))
         {
-            setminutes(0);
-            setseconds(59);
+            showToast('info', `Sending OTP to ${email}, please wait...`, true);
             let x = Math.floor(1000 + Math.random() * 9000);
             pickotp(x);
             let newemail = {
-                                toemail:email, 
-                                mysubject:"Your One-Time Password (OTP)",
-                                mymessage:"Hello "+[ fname +" "+lname ]+",Your one-time password (OTP) for [Purpose, e.g., logging in, resetting your password, verifying your account] is: " + [ x ] 
-                            }
-            let response = await postData(config.sendemail, newemail) 
+                toemail:email, 
+                mysubject:"Your One-Time Password (OTP)",
+                mymessage:"Hello "+[ fname +" "+lname ]+",Your one-time password (OTP) for [Purpose, e.g., logging in, resetting your password, verifying your account] is: " + [ x ] 
+            }
+            await postData(config.sendemail, newemail) 
+            .then(response =>{ 
+                toastRef.current.clear();
+
+                // Show success or failure toast based on response
+                if (response.status) {
+                    showToast('success', `OTP sent successfully to ${email}!`);
+                    setminutes(0);
+                    setseconds(59);
+                    setTimeout(() => {
+                        setShowModal(true);
+                    }, 2000); 
+                } else {
+                    showToast('error', 'Failed to send OTP. Please try again.');
+                }
+            })
         }
         else
         {
@@ -163,6 +204,7 @@ const Usersignup = () =>
             if(cpassworderror === "")
                 pickcpassworderror("wrong");
 
+            showToast('error', 'Please enter the required fields.');
         }
     }
 
@@ -175,6 +217,7 @@ const Usersignup = () =>
     {
         if(parseInt(checkotp) === parseInt(otp))
         {
+            showToast('info', 'Processing your request, please wait...', true);
             let newuser = { "firstname" : fname,
                             "lastname"  : lname,
                             "mobile"    : parseInt(mobile),
@@ -183,28 +226,35 @@ const Usersignup = () =>
                             "password"  : password
                         }
             
-            let userinfo = await register(config.userregister, newuser)
-            if(userinfo && userinfo !== ""){
-                swal(userinfo.message," Registered Successfully","success");
-                setLoggedIn(true)
+            await register(config.userregister, newuser)
+            .then(userinfo => {
+                toastRef.current.clear();
+                if(userinfo && userinfo !== ""){
+                    showToast('success', `${userinfo.message}, Registered Successfully!`);
+                    setTimeout(() => {
+                        setLoggedIn(true);
+                    }, 3000);
+    
+                    pickfname("");
+                    picklname("");
+                    pickmobile("");
+                    pickemail("");
+                    pickgender("");
+                    pickpassword("");
+                    pickcpassword("");
+                    pickcheckotp("");
+                }  
+                else
+                    showToast('error', "Wrong Details Entered"); 
 
-                pickfname("");
-                picklname("");
-                pickmobile("");
-                pickemail("");
-                pickgender("");
-                pickpassword("");
-                pickcpassword("");
-                pickcheckotp("");
-            }  
-            else
-                swal("Wrong Details Entered","","warning");    
-                
+                setShowModal(false);  
+            })       
         }
         else
         {
-            swal("OTP NOT MATCHED","Please Enter Correct OTP / Resend OTP","warning");
+            showToast('error', "OTP NOT MATCHED. Please Enter Correct OTP / Resend OTP.");
             pickcheckotp("");
+
         }
     }
 
@@ -249,158 +299,165 @@ const Usersignup = () =>
 
 
     return(
-        <div className="p-2"style={{
-            backgroundImage: 'url("/usersignup.jpg")', 
-            width: 'auto', 
-            backgroundSize: 'cover', 
-            height: 'auto', 
-            backgroundPosition: 'center', 
-            backgroundRepeat: 'no-repeat'}}>
-            <div className="row p-2 mt-2">
-                    <div className="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xl-4"></div>
-                    <div className="col-lg-3 col-sm-3 col-md-3 col-xl-3 col-xl-3"></div>
-                    <div className="col-lg-4 col-sm-4 text-white col-md-4 col-xl-4 col-xl-4 shadow-lg pb-3 m-auto" style={{ background: "rgba(0, 0, 0, 0.5)", opacity: 0.9 }}>
-                        <h1 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12  text-center mb-4 mt-4"><i className="fa fa-shopping-bag text-warning"></i> SreeShop</h1>
-                        <h6 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12 text-center text-primary mb-4"> <i className="fa fa-user"></i> Create your account </h6>
-                        
-                        <div className="row mb-3">
-                            <div className="col-4 text-start"> <h6>First Name </h6> </div>
-                            <div className="col-8"> 
-                                <input type="text"  className="form-control" 
-                                    style={{border:(fname!="")?(fnameerror=="wrong")?'4px solid red':'4px solid green':((fnameerror=="wrong")?'4px solid red':''),
-                                    boxShadow: (fname!="")?(fnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((fnameerror=="wrong")?'0px 0px 5px red':'')}}
-                                    onChange={obj=> { pickfname(obj.target.value); fnamevalidation(obj.target.value)}}
-                                    value={fname}  
-                                />
-                             </div>
+        <div className="bg-dark">
+            <Toast ref={toastRef} position="center" className="custom-toast" />
+            <div className="d-flex justify-content-center align-items-center vh-120">
+                <div className="col-lg-8 col-sm-8 col-md-8 col-xl-8 m-auto">
+                    <div className="p-2" style={{
+                        backgroundImage: 'url("/usersignup.jpg")', 
+                        width: 'auto', 
+                        backgroundSize: 'cover', 
+                        height: 'auto', // Set to full viewport height for mobile
+                        backgroundPosition: 'center', 
+                        backgroundRepeat: 'no-repeat'}}>
+                        <div className=" p-2 mt-2">
+                                <div className="col-lg-6 col-sm-6 col-md-6 col-xl-6 col-xxl-6"></div>
+                                <div className="col-lg-6 col-sm-6 col-md-6 col-xl-6 col-xl-6 shadow-lg pb-3 p-2 ms-auto" style={{ background: "", opacity: 0.9 }}>
+                                    <h1 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12  text-center mb-3 mt-2"><span> <img src="/sreeshop.jpg" width='50' height='50' alt="" /> </span> SreeShop</h1>
+                                    <h6 className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xxl-12 text-center text-primary mb-4"> <i className="fa fa-user"></i> Create your account </h6>
+                                    
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start"> <h6>First Name </h6> </div>
+                                        <div className="col-8"> 
+                                            <input type="text"  className="form-control" 
+                                                style={{border:(fname!="")?(fnameerror=="wrong")?'4px solid red':'4px solid green':((fnameerror=="wrong")?'4px solid red':''),
+                                                boxShadow: (fname!="")?(fnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((fnameerror=="wrong")?'0px 0px 5px red':'')}}
+                                                onChange={obj=> { pickfname(obj.target.value); fnamevalidation(obj.target.value)}}
+                                                value={fname}  
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start"> <h6>Last Name </h6> </div>
+                                        <div className="col-8"> 
+                                            <input type="text"  className="form-control" 
+                                                style={{border:(lname!="")?(lnameerror=="wrong")?'4px solid red':'4px solid green':((lnameerror=="wrong")?'4px solid red':''),
+                                                boxShadow: (lname!="")?(lnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((lnameerror=="wrong")?'0px 0px 5px red':'')}}
+                                                onChange={obj=> { picklname(obj.target.value); lnamevalidation(obj.target.value)}} 
+                                                value={lname} 
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start"> <h6>Mobile </h6> </div>
+                                        <div className="col-8"> 
+                                                <input type="number" className="form-control text-dark"
+                                                    style={{border:(mobile!="")?(mobileerror=="wrong")?'4px solid red':'4px solid green':((mobileerror=="wrong")?'4px solid red':''),
+                                                    boxShadow: (mobile!="")?(mobileerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((mobileerror=="wrong")?'0px 0px 5px red':'')}}
+                                                    onChange={obj=> { pickmobile(obj.target.value); mobilevalidation(obj.target.value)}}
+                                                    value={mobile}
+                                                />
+                                                <i className="text-danger"> {checkmobile} </i>
+                                        </div>
+                                    </div>
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start">  <h6>Email </h6>  </div>
+                                        <div className="col-8"> 
+                                            <input type="email" className="form-control bg-white" 
+                                                style={{border:(email!="")?(emailerror=="wrong")?'4px solid red':'4px solid green':((emailerror=="wrong")?'4px solid red':''),
+                                                boxShadow: (email!="")?(emailerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((emailerror=="wrong")?'0px 0px 5px red':'')}}
+                                                onChange={obj=> { pickemail(obj.target.value); emailvalidation(obj.target.value)}}
+                                                value={email}
+                                            /> 
+                                            <i className="text-danger"> {checkemail} </i>
+                                        </div>
+                                    </div>
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start">  <h6>Gender</h6>  </div>
+                                        <div className="col-8">
+                                            <select className="form-select" onChange={obj=>{pickgender(obj.target.value); gendervalidation(obj.target.value)}} value={gender}
+                                                style={{border : (gender!="")?(gendererror=="correct")?'4px solid green':'4px solid red':((gendererror=="wrong")?'4px solid red':''),
+                                                boxShadow: (gender!="")?(gendererror=="wrong")?'0px 0px 5px red':'0px 0px solid':((gendererror=="wrong")?'0px 0px 5px red':'')}}
+                                            >
+                                                <option value="">Choose</option>
+                                                <option> Male </option>
+                                                <option> Female </option>
+                                                <option> Other </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start">  <h6>Password</h6> </div>
+                                        <div className="col-8">  
+                                            <input type="password" className="form-control" 
+                                                style={{border:(password!="")?(passworderror=="wrong")?'4px solid red':'4px solid green':((passworderror=="wrong")?'4px solid red':''),
+                                                boxShadow: (password!="")?(passworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((passworderror=="wrong")?'0px 0px 5px red':'')}}
+                                                onChange={obj=> { pickpassword(obj.target.value); passwordvalidation(obj.target.value)}}
+                                                value={password}
+                                            /> 
+                                        </div>
+                                    </div>
+
+                                    <div className="row mb-3">
+                                        <div className="col-4 text-start">  <h6>C-Password</h6>  </div>
+                                        <div className="col-8"> 
+                                            <input type="password" className="form-control" 
+                                                style={{border:(cpassword!="")?(cpassworderror=="wrong")?'4px solid red':'4px solid green':((cpassworderror=="wrong")?'4px solid red':''),
+                                                boxShadow: (cpassword!="")?(cpassworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((cpassworderror=="wrong")?'0px 0px 5px red':'')}}
+                                                onChange={obj=> { pickcpassword(obj.target.value); cpasswordvalidation(obj.target.value)}}
+                                                value={cpassword}
+                                            /> 
+                                        </div>
+                                    </div>
+
+                                    <div className="text-center">  <button className="btn col-6  btn-primary form-control border rounded-pill mb-3 mt-1" onClick={sendemail} > Sign Up </button> </div>
+                                    <p className="text-center"> Or </p>
+                                    <p className="text-center" > Already have an account? <Link to="/userlogin"> <b className="text-primary ms-2"> Login</b> </Link> </p>
+                                    <p onClick={home} className="text-decoration-underline fs-5 text-center"> <i className="fa fa-home"></i> Home  </p>
+                                </div>
                         </div>
 
-                        <div className="row mb-3">
-                            <div className="col-4 text-start"> <h6>Last Name </h6> </div>
-                            <div className="col-8"> 
-                                <input type="text"  className="form-control" 
-                                    style={{border:(lname!="")?(lnameerror=="wrong")?'4px solid red':'4px solid green':((lnameerror=="wrong")?'4px solid red':''),
-                                    boxShadow: (lname!="")?(lnameerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((lnameerror=="wrong")?'0px 0px 5px red':'')}}
-                                    onChange={obj=> { picklname(obj.target.value); lnamevalidation(obj.target.value)}} 
-                                    value={lname} 
-                                />
-                            </div>
-                        </div>
 
-                        <div className="row mb-3">
-                            <div className="col-4 text-start"> <h6>Mobile </h6> </div>
-                            <div className="col-8"> 
-                                    <input type="number" className="form-control text-dark"
-                                        style={{border:(mobile!="")?(mobileerror=="wrong")?'4px solid red':'4px solid green':((mobileerror=="wrong")?'4px solid red':''),
-                                        boxShadow: (mobile!="")?(mobileerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((mobileerror=="wrong")?'0px 0px 5px red':'')}}
-                                        onChange={obj=> { pickmobile(obj.target.value); mobilevalidation(obj.target.value)}}
-                                        value={mobile}
-                                     />
-                                    <i className="text-danger"> {checkmobile} </i>
-                            </div>
-                        </div>
+                        <Modal show={showModal} onHide={() => setShowModal(false)} className="custom-modal" size="md" centered>
+                            <Modal.Header closeButton>
+                                <Modal.Title className="ms-auto">Verify OTP</Modal.Title>
+                            </Modal.Header>
 
-                        <div className="row mb-3">
-                            <div className="col-4 text-start">  <h6>Email </h6>  </div>
-                            <div className="col-8"> 
-                                <input type="email" className="form-control bg-white" 
-                                    style={{border:(email!="")?(emailerror=="wrong")?'4px solid red':'4px solid green':((emailerror=="wrong")?'4px solid red':''),
-                                    boxShadow: (email!="")?(emailerror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((emailerror=="wrong")?'0px 0px 5px red':'')}}
-                                    onChange={obj=> { pickemail(obj.target.value); emailvalidation(obj.target.value)}}
-                                    value={email}
-                                /> 
-                                <i className="text-danger"> {checkemail} </i>
-                            </div>
-                        </div>
-
-                        <div className="row mb-3">
-                            <div className="col-4 text-start">  <h6>Gender</h6>  </div>
-                            <div className="col-8">
-                                <select className="form-select" onChange={obj=>{pickgender(obj.target.value); gendervalidation(obj.target.value)}} value={gender}
-                                    style={{border : (gender!="")?(gendererror=="correct")?'4px solid green':'4px solid red':((gendererror=="wrong")?'4px solid red':''),
-                                    boxShadow: (gender!="")?(gendererror=="wrong")?'0px 0px 5px red':'0px 0px solid':((gendererror=="wrong")?'0px 0px 5px red':'')}}
+                            <Modal.Body>
+                                <div className="d-flex justify-content-center">
+                                    <InputOtp value={checkotp} onChange={(e) => pickcheckotp(e.value)} className="p-inputtext p-component" />
+                                </div>
+                                <div className="row pt-4 text-center">
+                                    <p className="col-7">Time Remaining: {" "}
+                                        <span style={{ fontWeight: 600 }}>
+                                            {minutes < 10 ? `0${minutes}` : minutes}:
+                                            {seconds < 10 ? `0${seconds}` : seconds}
+                                        </span>
+                                    </p>
+                                    <label className="col-5 text-danger text-decoration-underline"
+                                        disabled={seconds > 0 || minutes > 0}
+                                        onClick={sendemail}> 
+                                        Resend OTP
+                                    </label>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button 
+                                    variant="success" 
+                                    onClick={signup}
+                                    disabled={parseInt(otp) !== parseInt(checkotp)} // Disable button if OTP does not match
                                 >
-                                    <option value="">Choose</option>
-                                    <option> Male </option>
-                                    <option> Female </option>
-                                    <option> Other </option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div className="row mb-3">
-                            <div className="col-4 text-start">  <h6>Password</h6> </div>
-                            <div className="col-8">  
-                                <input type="password" className="form-control" 
-                                    style={{border:(password!="")?(passworderror=="wrong")?'4px solid red':'4px solid green':((passworderror=="wrong")?'4px solid red':''),
-                                    boxShadow: (password!="")?(passworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((passworderror=="wrong")?'0px 0px 5px red':'')}}
-                                    onChange={obj=> { pickpassword(obj.target.value); passwordvalidation(obj.target.value)}}
-                                    value={password}
-                                /> 
-                            </div>
-                        </div>
-
-                        <div className="row mb-3">
-                            <div className="col-4 text-start">  <h6>C-Password</h6>  </div>
-                            <div className="col-8"> 
-                                <input type="password" className="form-control" 
-                                    style={{border:(cpassword!="")?(cpassworderror=="wrong")?'4px solid red':'4px solid green':((cpassworderror=="wrong")?'4px solid red':''),
-                                    boxShadow: (cpassword!="")?(cpassworderror=="wrong")?'0px 0px 5px red':'0px 0px 5px green':((cpassworderror=="wrong")?'0px 0px 5px red':'')}}
-                                    onChange={obj=> { pickcpassword(obj.target.value); cpasswordvalidation(obj.target.value)}}
-                                    value={cpassword}
-                                /> 
-                            </div>
-                        </div>
-
-                        <div className="text-center">  <button style={{opacity: 10 }} className="btn col-6  btn-primary form-control text-white border rounded-pill mb-3 mt-1" disabled={!fname || !lname || !mobile || !email || !gender || !password || !cpassword} onClick={sendemail} data-bs-toggle="modal" data-bs-target="#myModal"> Sign Up </button> </div>
-                        <p className="text-center"> Or </p>
-                        <p className="text-center" style={{opacity: 10 }}> Already have an account? <Link to="/userlogin"> <b className="text-primary ms-2"> Login</b> </Link> </p>
-                    </div>
-            </div>
-
-
-            <div class="modal fade custom-modal" id="myModal">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <h3 className="modal-title ms-auto">Verify OTP</h3>
-                            <button type="button" class="btn-close"  data-bs-dismiss="modal" ></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div className="d-flex justify-content-center">
-                                <InputOtp value={checkotp} onChange={(e) => pickcheckotp(e.value)} className="p-inputtext p-component" />
-                            </div>
-                            <div className="row pt-4 text-center">
-                                <p className="col-7">Time Remaining :  {" "}
-                                    <span style={{fontWeight:600}}>
-                                    {minutes < 10 ? `0${minutes}` : minutes}:
-                                    {seconds < 10 ? `0${seconds}` : seconds}
-                                    </span> </p>
-                                <label className="col-5 text-danger text-decoration-underline"
-                                disabled={seconds > 0 || minutes > 0}  
-                                onClick={sendemail}> Resend OTP
-                                </label> 
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success m-auto" 
-                                        data-bs-dismiss= {(parseInt(otp) === parseInt(checkotp)) ?  "modal" : "" } 
-                                        onClick={signup}>
                                     SUBMIT
-                            </button>
-
-                        </div>
-
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
-                </div>
+                </div>    
             </div>
-
         </div>
     )
 }
 
 export default Usersignup;
+
+const home = () => {
+    localStorage.setItem("userloginpermission", false);
+    localStorage.setItem("usersignuppermission", false);
+    window.close();
+}

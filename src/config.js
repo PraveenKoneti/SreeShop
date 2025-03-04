@@ -1,7 +1,7 @@
 
 
-//let host = 'http://localhost:7777';
-let host = "https://sreeshopbackend.onrender.com"
+let host = 'http://localhost:7777';
+//let host = "https://sreeshopbackend.onrender.com"
 
 export const config = {
 
@@ -33,8 +33,8 @@ export const config = {
         deletecartlist:  `${host}/cartlist/deletecartlist`,
         updatecartlist:  `${host}/cartlist/updatecartlist`,
         saveorder:       `${host}/orderlist/saveorder`,
-        sendemailpdf:    `${host}/emailpdf/sendemailpdf`,
         getcartlist:     `${host}/cartlist/getcartlist`,
+        sendorderpdf:    `${host}/email/sendorderpdf`,
 
         //MYORDERS.JS
         getorderlist:    `${host}/orderlist/getorderlist`,
@@ -91,5 +91,11 @@ export const config = {
 
         //PRODUCTCANCELLEDCHART.JS
         getcancelledproducts:  `${host}/product/getcancelledproducts`,
+
+        //PRODUCTSTATUSUPDATE.JS
+        bulkproductstatusupdate: `${host}/product/bulkproductstatusupdate`,
+
+        //BULKPRODUCTDELETE.JS
+        bulkproductsdelete: `${host}/product/bulkproductsdelete`,
 
 };

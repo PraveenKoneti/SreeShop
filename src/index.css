@@ -101,11 +101,161 @@ body {
 }
 
 
+.nav-category a.active-link {
+  color: black !important; /* Ensure text color changes to black */
+  border-bottom: 2px solid black;
+}
 
 
 
 
-/*  Media Query for Mobile Phones   */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                              /* TOASTIFY LOADER */
+
+
+
+
+.loader-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.loader-dots div {
+    width: 8px;
+    height: 8px;
+    background-color: #000;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+}
+
+.loader-dots div:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loader-dots div:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.loader-dots div:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+    
+
+
+.custom-toast {
+  z-index: 9999 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                /* PRIME REACT DATA TABLE CSS  */
+
+.p-datatable table {
+border-collapse: collapse; /* Ensures borders don't overlap */
+}
+
+.p-datatable td,
+.p-datatable th {
+border: 1px solid #ddd; /* Add borders around each cell */
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: black !important;
+  color: white !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+.p-datatable .p-column-header-content{
+  display: block !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td{
+   text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  /*  Media Query for Mobile Phones   */
 
 body{
   @media (min-width: 100px) and (max-width: 250px) {
@@ -147,6 +297,7 @@ body{
     .custom-brandnames{height:300px; overflow:auto; -ms-overflow-style:none; scrollbar-width: none;} /* Display Type */
     .productoffer{width:60px; font-size: 8px;}                  /* Display Type */
     .custom-nameprice{font-size:5px;}       
-
+    .brandnames{font-size: 12px;}
+    .seller-edit-button{font-size:10px; width:60px;}                        /*edit product */
   }
 }

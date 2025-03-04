@@ -1,5 +1,5 @@
 
-import { HashRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -22,11 +22,11 @@ const Sellerapp = () =>
     }
 
     return(
-        <HashRouter>
+        <div>
             <nav className="navbar navbar-expand-sm navbar-dark bg-sellernav p-2">
-                <div className="container">
+                <div className="container-fluid">
                     <span style={{ display: 'flex', alignItems: 'center' }}>
-                        <i className="fa fa-shopping-bag fs-1"></i>
+                        <span> <img src="/sreeshop.jpg" width='50' height='50' alt="" /> </span>
                         <span className="ms-2 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Sree</span>
                         <span className="ms-1 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Shop</span>
                     </span>
@@ -131,7 +131,7 @@ const Sellerapp = () =>
                 </div>
             </footer>
 
-        </HashRouter> 
+        </div> 
     )
 }
 

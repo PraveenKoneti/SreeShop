@@ -1,5 +1,6 @@
-import { useState,} from "react";
-import { HashRouter,BrowserRouter, Routes, Route, Link,} from "react-router-dom";
+import { useState, useEffect} from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -8,14 +9,13 @@ import Myprofile from "../nav/myprofile";
 import Myorders from "../nav/myorders";
 import Mywishlist from "../nav/mywishlist";
 import Cartlist from "../nav/cartlist";
-import Mybill from "../nav/mybill";
 import Rewards from "../nav/rewards";
 
 import Displaytype from "../displayitems/displaytype";
 import Displaysingle from "../displayitems/displaysingle";
 
 import Userlogin from "../userlogin/login";
-import Usersignup from "../userlogin/signup";
+// import Usersignup from "../userlogin/signup";
 
 import Handlesellerpage from "../sellerlogin/sellerpageshandle";
 import { fetchData } from "../Api/apihandler";
@@ -26,6 +26,10 @@ const Adminapp = ()=>
     
     let[searchkey, picksearchkey] = useState('');
     const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+
+
+    const location = useLocation();
+    const currentPath = location.pathname;
 
 
     const handleInputChange = async(e) => {
@@ -51,17 +55,21 @@ const Adminapp = ()=>
     }
 
 
-    // window.addEventListener('beforeunload', function () {
-    //     localStorage.removeItem("SreeShoppermit");
-    // });
+    window.addEventListener('beforeunload', function () {
+        localStorage.removeItem("SreeShoppermit");
+        localStorage.setItem("usersignuppermission", false);
+    });
+    
+
+
 
     return(
-        <HashRouter>
+        <>
                 <nav className="sticky-top">
                     <nav className="navbar navbar-expand-sm navbar-dark p-1 bg-dark">
-                        <div className="container">
+                        <div className="container-fluid p-2">
                             <span style={{ display: 'flex', alignItems: 'center' }}>
-                                <i className="fa fa-shopping-bag fs-1 text-warning"></i>
+                                <span> <img src="/sreeshop.jpg" width='50' height='50' alt="" /> </span>
                                 <span className="ms-2 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Sree</span>
                                 <span className="ms-1 fs-1 text-white" style={{ fontFamily: 'Roboto, sans-serif', }}>Shop</span>
                             </span>
@@ -104,36 +112,71 @@ const Adminapp = ()=>
                                         <Link className="text-decoration-none text-warning fs-5" to="/cartlist"><i className="fa fa-shopping-cart"></i> Cart </Link>
                                     </li>
                                     <li className="nav-item me-4 p-2">
-                                        <div className="dropdown dropdown-menu-end">
-                                            <button type="button" className="btn fs-5 p-0 text-white border-0 dropdown-toggle" data-bs-toggle="dropdown">
+                                        <div className="dropdown dropstart">
+                                            <button type="button" className="btn fs-5 p-0 text-white border-0" data-bs-toggle="dropdown">
                                                 <i className="fa-regular fa-circle-user me-2"></i>
-                                                {localStorage.getItem("id") !== "" ? localStorage.getItem("username") || "Profile" : "Profile"}
+                                                {localStorage.getItem("id") !== "" || localStorage.getItem("id") !== null ? localStorage.getItem("username") || "Profile" : "Profile"}
                                             </button>
-                                            <ul className="dropdown-menu" style={{ minWidth: '248px' }} >
-                                                <li className="ms-3 pt-3 pb-3"> <b>New Customer ?</b> <Link to='/usersignup' className="text-decoration-none ms-2 fs-5"> Sign Up </Link>  </li>
-                                                <li className="mb-3"> <hr className="dropdown-divider"  /> </li>
-                                                <li className="mb-3"> <Link to="/myprofile" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-circle-user"></i> My Profile </Link> <i className="ms-2">Hi {localStorage.getItem("username")}</i> </li>
-                                                <li className="mb-3"> <Link to="/myorders" className="ms-3 text-decoration-none fs-6"> <i class="fa fa-database"></i>  My Orders</Link> </li>
-                                                <li className="mb-3"> <Link to="/mywishlist" className="ms-3 text-decoration-none fs-6"> <i className="fa-regular fa-heart"></i> Wishlist </Link> </li>
-                                                <li className="mb-3"> <Link to="/rewards" className="ms-3 text-decoration-none fs-6"> <i className="fa fa-gift"></i> Rewards </Link> </li>
+                                            <ul className="dropdown-menu" style={{ width: '300px', position: 'absolute', top: '100%', right: 0, left: 'auto', transform: 'translateX(0)' }}>
+                                                {localStorage.getItem("userid") === null ? (
+                                                    // If the user is NOT logged in
+                                                    <>
+                                                        <li className="ms-3 pt-3 pb-3">
+                                                            <b>New Customer?</b>
+                                                            <Link onClick={userSignup} className="text-decoration-none ms-2 fs-5">Sign Up</Link>
+                                                        </li>
+                                                    </>
+                                                ) : (
+                                                    // If the user IS logged in, show something different
+                                                    <>
+                                                        <li className="ms-3 pt-3 pb-3">
+                                                            <b>Welcome Back!</b>
+                                                            <span className="ms-2 fs-5">Hi {localStorage.getItem("username")}</span>
+                                                        </li>
+                                                    </>
+                                                )}
+                                                <li className="mb-3">
+                                                    <hr className="dropdown-divider" />
+                                                </li>
+                                                <li className="mb-3">
+                                                    <Link to="/myprofile" className="ms-3 text-decoration-none fs-6">
+                                                        <i className="fa-regular fa-circle-user"></i> My Profile
+                                                    </Link>
+                                                    <i className="ms-2">Hi {localStorage.getItem("username")}</i>
+                                                </li>
+                                                <li className="mb-3">
+                                                    <Link to="/myorders" className="ms-3 text-decoration-none fs-6">
+                                                        <i className="fa fa-database"></i> My Orders
+                                                    </Link>
+                                                </li>
+                                                <li className="mb-3">
+                                                    <Link to="/mywishlist" className="ms-3 text-decoration-none fs-6">
+                                                        <i className="fa-regular fa-heart"></i> Wishlist
+                                                    </Link>
+                                                </li>
+                                                <li className="mb-3">
+                                                    <Link to="/rewards" className="ms-3 text-decoration-none fs-6">
+                                                        <i className="fa fa-gift"></i> Rewards
+                                                    </Link>
+                                                </li>
                                                 <li className="mb-3 text-center">
                                                     <div className="row ms-2">
-                                                        {(localStorage.getItem("userid") == null) ?
-                                                            (
-                                                                <div className="col-xl-6 m-auto">
-                                                                    <Link to="/userlogin"> <button className="btn btn-primary form-control  custom-btndropdown"> Login </button> </Link>  
-                                                                </div>
-                                                            ):
-                                                            (
-                                                                <div className="col-xl-6 m-auto">
-                                                                    <button className="btn btn-danger form-control custom-btndropdown" onClick={Logout}>  Logout </button>
-                                                                </div>
-                                                            )
-                                                        }  
+                                                        {localStorage.getItem("userid") === null ? (
+                                                            <div className="col-xl-6 m-auto">
+                                                                <Link>
+                                                                    <button onClick={userLogin} className="btn btn-primary form-control custom-btndropdown">Login</button>
+                                                                </Link>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="col-xl-6 m-auto">
+                                                                <button className="btn btn-danger form-control custom-btndropdown" onClick={Logout}>Logout</button>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
+
                                     </li>
                                 </ul>
                             </div>
@@ -144,19 +187,98 @@ const Adminapp = ()=>
 
                     <nav className="bg-warning nav-bar">
                         <div className="container ms-2 nav-category">
-                            <Link className="text-white text-decoration-none  nav-category" data-bs-toggle="offcanvas" data-bs-target="#demo"> <i className="fa fa-list text-white me-2"></i> All </Link>
-                            <Link to="/kids wear" className="text-white text-decoration-none  nav-category"> Kids Wear </Link>              
-                            <Link to="/mens wear" className="text-white text-decoration-none  nav-category"> Mens Wear </Link>
-                            <Link to="/womens wear" className="text-white text-decoration-none  nav-category"> Womens Wear </Link>
-                            <Link to="/bags" className="text-white text-decoration-none  nav-category"> Bags </Link>
-                            <Link to="/head phones" className="text-white text-decoration-none  nav-category"> Head Phones </Link>
-                            <Link to={`/${'mobiles'}-${""}`} className="text-white text-decoration-none  nav-category"> Mobiles </Link>
-                            <Link to="/laptops" className="text-white text-decoration-none  nav-category"> Laptops </Link>
-                            <Link to="/watches" className="text-white text-decoration-none  nav-category"> Watches </Link>
-                            <Link to="/electronic gadgets" className="text-white text-decoration-none  nav-category"> Elec-Goods </Link>
-                            <Link to="/footwear" className="text-white text-decoration-none  nav-category"> Footwear </Link>
-                            <Link to="/shampoos" className="text-white text-decoration-none  nav-category"> Shampoos </Link>
-                            <Link to="/moisturizers" className="text-white text-decoration-none  nav-category"> Moisturizers </Link>
+                            <Link
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#demo"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/all' ? 'active-link' : ''}`}
+                            >
+                                <i className="fa fa-list text-white me-2"></i> All
+                            </Link>
+
+                            <Link
+                                to="/kids wear"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/kids wear' ? 'active-link' : ''}`}
+                            >
+                                Kids Wear
+                            </Link>
+
+                            <Link
+                                to="/mens wear"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/mens wear' ? 'active-link' : ''}`}
+                            >
+                                Mens Wear
+                            </Link>
+
+                            <Link
+                                to="/womens wear"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/womens wear' ? 'active-link' : ''}`}
+                            >
+                                Womens Wear
+                            </Link>
+
+                            <Link
+                                to="/bags"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/bags' ? 'active-link' : ''}`}
+                            >
+                                Bags
+                            </Link>
+
+                            <Link
+                                to="/head phones"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/head phones' ? 'active-link' : ''}`}
+                            >
+                                Head Phones
+                            </Link>
+
+                            <Link
+                                to="/mobiles"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/mobiles' ? 'active-link' : ''}`}
+                            >
+                                Mobiles
+                            </Link>
+
+                            <Link
+                                to="/laptops"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/laptops' ? 'active-link' : ''}`}
+                            >
+                                Laptops
+                            </Link>
+
+                            <Link
+                                to="/watches"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/watches' ? 'active-link' : ''}`}
+                            >
+                                Watches
+                            </Link>
+
+                            <Link
+                                to="/electronic gadgets"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/electronic gadgets' ? 'active-link' : ''}`}
+                            >
+                                Elec-Goods
+                            </Link>
+
+                            <Link
+                                to="/footwear"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/footwear' ? 'active-link' : ''}`}
+                            >
+                                Footwear
+                            </Link>
+
+                            <Link
+                                to="/shampoos"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/shampoos' ? 'active-link' : ''}`}
+                            >
+                                Shampoos
+                            </Link>
+
+                            <Link
+                                to="/moisturizers"
+                                className={`text-white text-decoration-none nav-category ${currentPath === '/moisturizers' ? 'active-link' : ''}`}
+                            >
+                                Moisturizers
+                            </Link>
                         </div>
                     </nav>
                 </nav>
@@ -164,27 +286,20 @@ const Adminapp = ()=>
 
 
             <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/home" element={<Home/>} />
+                
+                <Route path="/cartlist" element={ <Cartlist/> } />
+                <Route path="/myprofile" element={ <Myprofile/> } />
+                <Route path="/myorders" element= { <Myorders/> } />
+                <Route path="/mywishlist" element= { <Mywishlist/> } />
+                <Route path="/rewards" element={ <Rewards/> } />
 
-                <Route path="/*" element={ <Home/> } />
-                <Route exact path="/home" element={ <Home/> } />
-                <Route exact path="/cartlist" element={ <Cartlist/> } />
-                <Route exact path="/myprofile" element={ <Myprofile/> } />
-                <Route exact path="/myorders" element= { <Myorders/> } />
-                <Route exact path="/mywishlist" element= { <Mywishlist/> } />
-                <Route exact path="/rewards" element={ <Rewards/> } />
-                <Route exact path="/mybill" element= { <Mybill/> } />
+                <Route path="/:category" element={ <Displaytype/> } /> 
+                <Route path="/:searchvalue" element={ <Displaytype/> } /> 
+                <Route path="/:category/:id" element= { <Displaysingle/> } />
 
-                <Route exact path="/userlogin" element={ <Userlogin/> } />
-                <Route exact path="/usersignup" element={ <Usersignup/> } />
-
-                <Route exact path="/:category" element={ <Displaytype/> } /> 
-                <Route exact path="/:searchvalue" element={ <Displaytype/> } /> 
-                <Route exact path="/:category/:id" element= { <Displaysingle/> } />
-
-                <Route exact path="/becomeseller" element={ <Handlesellerpage/> } />
-
-                {localStorage.getItem("userlogin") === "true" && <Route path="/Home" element={<Navigate to="/Home" replace />} />}
-                {/*localStorage.getItem("SreeShoppermit") === "sellerlogout" && <Route path="/Home" element={<Navigate to="/Home" replace />} />} */}
+                <Route path="*" element={<Navigate to="/home" replace />} />
 
             </Routes>
 
@@ -252,7 +367,7 @@ const Adminapp = ()=>
 
             
             
-            <div
+        <div
             className="offcanvas offcanvas-start"
             id="demo"
             style={{
@@ -298,14 +413,14 @@ const Adminapp = ()=>
                     <h5 style={{ fontWeight: 'bold' }}>Login / Signup</h5>
                     <div className="d-flex flex-column mt-2">
                         <Link
-                            to="/userlogin"
+                            onClick={userLogin}
                             className="btn btn-primary btn-sm mb-2"
                             style={{ backgroundColor: '#007bff', border: 'none' }}
                         >
                             <i className="fa fa-user me-2"></i> Login
                         </Link>
                         <Link
-                            to="/usersignup"
+                            onClick={userSignup}
                             className="btn btn-success btn-sm"
                             style={{ backgroundColor: '#28a745', border: 'none' }}
                         >
@@ -358,17 +473,26 @@ const Adminapp = ()=>
         </div>
 
 
-        </HashRouter>
+        </>
     )
 }
 
 export default Adminapp;
 
 
-const userLogin = () =>{
-    localStorage.setItem("userlogin", false);
-    window.location.reload();
+const userLogin = () => {
+    localStorage.setItem("userloginpermission", true);
+    const sellerPageUrl = "/userlogin"; // Replace with your seller page URL
+    window.open(sellerPageUrl, "_blank");
 }
+
+
+const userSignup = () => {
+    localStorage.setItem("usersignuppermission", true);
+    const sellerPageUrl = "/usersignup"; // Replace with your seller page URL
+    window.open(sellerPageUrl, "_blank");
+}
+
 
 
 const Logout = () =>
@@ -380,7 +504,7 @@ const Logout = () =>
 const Sellerpage = () => {
     localStorage.setItem("SreeShoppermit", "sellerlogin");
     //window.location.reload();
-    // const sellerPageUrl = "/becomeseller"; // Replace with your seller page URL
-    // window.open(sellerPageUrl, "_blank");
+    const sellerPageUrl = "/becomeseller"; // Replace with your seller page URL
+    window.open(sellerPageUrl, "_blank");
     
 }

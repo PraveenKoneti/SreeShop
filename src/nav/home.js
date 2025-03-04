@@ -21,7 +21,7 @@ const Home = () =>
     return(
         
             <div className="row p-0 m-0">
-                <div id="myCarousel" className="carousel slide mb-6 m-0 p-0" data-bs-ride="carousel">
+                <div id="myCarousel" className="carousel slide m-0 p-0" data-bs-ride="carousel">
                     <div className="carousel-indicators">
                         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -91,7 +91,7 @@ const Home = () =>
         
                 
                 <div className='mt-1 mb-1 m-0 p-0'>
-                    <img src="images/homedelivery.jpg"  width="100%" height="auto"  className="img-fluid" alt="" /> 
+                    <img src="images/home/delivery.jpg"  width="100%" height="auto"  className="img-fluid" alt="" /> 
                 </div>
 
 

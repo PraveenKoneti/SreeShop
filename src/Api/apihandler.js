@@ -16,17 +16,14 @@ export const register = (url, data) =>{
 }
 
 
-
 export const fetchData = (url) =>{
     return api.fetchData(url, headers);
 }
 
 
-
 export const postData = (url, data) =>{
     return api.postData(url, data, headers)
 }
-
 
 
 export const putData = (url, data) =>{

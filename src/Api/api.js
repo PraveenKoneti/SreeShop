@@ -55,7 +55,6 @@ export const putData = async(url, data, headers) =>{
         ret = res.data;
     })
     return ret;
-
 }
 
 
@@ -66,6 +65,5 @@ export const deleteData = async(url, headers) =>{
     .then(res=>{
         ret = res.data;
     })
-    return ret;
-    
+    return ret;    
 }

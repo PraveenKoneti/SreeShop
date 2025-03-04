@@ -3,7 +3,10 @@ import swal from "sweetalert";
 import { putData } from "../Api/apihandler";
 import { config } from "../config";
 
-const Editproduct = ({ productdata, updateProductList }) => {
+import { Button } from 'primereact/button';
+import { Modal } from 'bootstrap';
+
+const Editproduct = ({ productdata, refresh}) => {
     const [brandname, pickbrandname] = useState(productdata.brandname);
     const [categoryname, pickcategoryname] = useState(productdata.categoryname);
     const [pname, pickpname] = useState(productdata.productname);
@@ -55,7 +58,7 @@ const Editproduct = ({ productdata, updateProductList }) => {
             productname: pname,
             productprice: pprice,
             productactive: pactive,
-            productdate: pdate,
+            productdate: new Date(pdate).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }), // IST format
             productimage: pphoto,
             productdescription: pdescription,
             producturl: generatedURL
@@ -63,8 +66,11 @@ const Editproduct = ({ productdata, updateProductList }) => {
         await putData(`${config.updateproduct}/${productdata._id}`, updatedProduct)
         .then(res => {
             if (res.success) {
-                updateProductList(updatedProduct);
-                swal("Product updated successfully", pname, "success");
+                swal("Product updated successfully", pname, "success")
+                .then(() => {
+                    refresh(); // Call the refresh function
+                    
+                });
             } else {
                 swal("Failed to update product", pname, "error");
             }
@@ -73,8 +79,7 @@ const Editproduct = ({ productdata, updateProductList }) => {
 
     return (
         <div>
-            <button className="btn btn-success btn-sm form-control" data-bs-toggle="modal" data-bs-target={`#editModal${productdata._id}`}>Edit</button>
-
+            <Button icon="pi pi-pencil" rounded outlined className="mr-2 text-success rounded-pill" data-bs-toggle="modal" data-bs-target={`#editModal${productdata._id}`} />
             <div className="modal fade" id={`editModal${productdata._id}`} tabIndex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
@@ -122,14 +127,14 @@ const Editproduct = ({ productdata, updateProductList }) => {
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <div className="col-4"> <h6>Product Active</h6> </div>
+                                    <div className="col-4"> <h6>Product Status</h6> </div>
                                     <div className="col-8">
                                         <select className="form-select" onChange={obj => pickpactive(obj.target.value)} value={pactive}
                                             style={{ border: pactive === "" && pactiveerror === "wrong" ? '4px solid red' : '', boxShadow: pactive === "" && pactiveerror === "wrong" ? '0px 0px 5px red' : '' }}
                                         >
                                             <option value="">Choose</option>
-                                            <option>In Stock</option>
-                                            <option>Not in Stock</option>
+                                            <option value="InStock">InStock</option>
+                                            <option value="OutOfStock">OutOfStock</option>
                                         </select>
                                     </div>
                                 </div>

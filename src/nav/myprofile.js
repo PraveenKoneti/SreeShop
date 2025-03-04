@@ -1,14 +1,36 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import swal from "sweetalert";
 import { Link, useParams } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 import { config } from "../config";
 import { postData, fetchData } from "../Api/apihandler";
+import { Toast } from 'primereact/toast'; // Import Toast component
+import { Modal, Button } from 'react-bootstrap';
+import { InputOtp } from 'primereact/inputotp'; 
 
 const Myprofile = () =>
 {
+    const [showModal, setShowModal] = useState(false);
+    const toastRef = useRef(null); // Create a ref for the toast
+
+    const showToast = (severity, detail, isLoading = false) => {
+        const content = (
+            <div className="d-flex align-items-center">
+                <span>{detail}</span>
+                {isLoading && (
+                    <div className="loader-dots ms-2" > {/* Remove margin */}
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                )}
+            </div>
+        );
+        toastRef.current.show({ severity, summary: null, detail: content });
+    };
 
     let[fname, pickfname] = useState("");
     let[fnameerror, pickfnameerror] = useState("correct");
@@ -138,23 +160,37 @@ const Myprofile = () =>
     {
         if((fnameerror === "correct") && (lnameerror === "correct") && (mobileerror === "correct") && (emailerror === "correct") && (gendererror === "correct") && (passworderror === "correct"))
         {
-            setminutes(0);
-            setseconds(59);
+            showToast('info', `Sending OTP to ${email}, please wait...`, true);
             let x = Math.floor(1000 + Math.random() * 9000);
             pickotp(x);
             let newemail = {
-                                toemail:email, 
-                                mysubject:"Your One-Time Password (OTP)",
-                                mymessage:"Hello "+[ fname +" "+lname ]+",Your one-time password (OTP) for [Purpose, e.g., logging in, resetting your password, verifying your account] is: " + [ x ] 
-                            }
-            let response = await postData(config.sendemail, newemail) 
+                toemail:email, 
+                mysubject:"Your One-Time Password (OTP)",
+                mymessage:"Hello "+[ fname +" "+lname ]+",Your one-time password (OTP) for [Purpose, e.g., logging in, resetting your password, verifying your account] is: " + [ x ] 
+            }
+            await postData(config.sendemail, newemail) 
+            .then(response =>{ 
+                toastRef.current.clear();
 
+                // Show success or failure toast based on response
+                if (response.status) {
+                    showToast('success', `OTP sent successfully to ${email}!`);
+                    setTimeout(() => {
+                        setShowModal(true);
+                        setminutes(0);
+                        setseconds(59);
+                    }, 2000); 
+                    
+                } else {
+                    showToast('error', 'Failed to send OTP. Please try again.');
+                }
+            }) 
         }
         else
         {
-            if(fnameerror == "")
+            if(fnameerror === "")
                 pickfnameerror("wrong");
-            if(lnameerror == "")
+            if(lnameerror === "")
                 picklnameerror("wrong");
             if(mobileerror == "")
                 pickmobileerror("wrong");
@@ -167,6 +203,7 @@ const Myprofile = () =>
             if(cpassworderror == "")
                 pickcpassworderror("wrong");
 
+            showToast('error', 'Please enter the required fields.');
         }
     }
 
@@ -176,9 +213,9 @@ const Myprofile = () =>
 
     const update = async() =>
     {
-        if(parseInt(checkotp) == parseInt(otp))
+        if(parseInt(checkotp) === parseInt(otp))
         {
-            
+            showToast('info', 'Processing your request, please wait...', true);
             let updateuser = { "firstname" : fname,
                             "lastname"  : lname,
                             "mobile"    : parseInt(mobile),
@@ -188,14 +225,16 @@ const Myprofile = () =>
                         }
             await postData(`${config.updateuser}/${localStorage.getItem("userid")}`, updateuser)
             .then(userinfo =>{
-                swal(userinfo.message," Updated Successfully","success");
+                toastRef.current.clear();
+                setShowModal(false);
+                showToast('success', `${userinfo.message}, Updated Successfully!`);
                 getdata();   
             })  
                 
         }
         else
         {
-            swal("OTP NOT MATCHED","Please Enter Correct OTP / Resend OTP","warning");
+            showToast('error', "OTP NOT MATCHED. Please Enter Correct OTP / Resend OTP.");
             pickcheckotp("");
         }
 
@@ -217,7 +256,10 @@ const Myprofile = () =>
                 pickcpassword(userinfo.password);
             })
         }
-        
+        else 
+        {
+            showToast("error","Please Login / Signup")
+        }
     }
 
     useEffect(()=>{getdata();}, []);
@@ -257,18 +299,19 @@ const Myprofile = () =>
 
     if(localStorage.getItem("userid") === null)
     {
-        swal("Please Login / Signup","You have Account Login / Signup","warning")
-            .then(()=>{
-                login()
-            })
+        showToast("error","Please Login / Signup, You have Account Login / Signup")
+        setTimeout(() => {
+            return <Navigate to="/home" />
+        }, 2000);
     }
 
     return(
         <div className="container">
+            <Toast ref={toastRef} position="center" className="custom-toast" />
             <div className="row mt-4">
                 <div className="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4 m-auto pb-5"></div>
                     <div className="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4">
-                        <div className="card shadow-lg pb-4">
+                        <div className="card shadow-lg pb-4 mb-5">
                             <div className="card-header  text-white bg-primary">
                                 <h2 className="text-center pt-2 pb-2"> <i className="fa fa-user"></i> Update your account </h2>
                             </div>
@@ -367,51 +410,47 @@ const Myprofile = () =>
                             </div>
                         </div>
                         <div className="col-6 m-auto">
-                            <button className="btn btn-primary form-control border rounded-pill mb-3 mt-1" onClick={sendemail} data-bs-toggle="modal" data-bs-target="#myModal"> Update </button>
+                            <button className="btn btn-primary form-control border rounded-pill mb-3 mt-1" onClick={sendemail} > Update </button>
                         </div>
-                        <p className="text-center"> Or </p>
-                        <p className="text-center"> Already have an account? <Link to="/login"> <b className="text-primary ms-2"> Login</b> </Link> </p>
                     </div>
                 </div>
                 <div className="col-xl-4 col-xxl-4 col-lg-4 col-md-4 col-sm-4"></div>
             </div>
 
-            <div class="modal fade custom-modal" id="myModal">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
 
-                        <div class="modal-header">
-                            <h3 className="modal-title ms-auto">Verify OTP</h3>
-                            <button type="button" class="btn-close"  data-bs-dismiss="modal" ></button>
-                        </div>
 
-                        <div class="modal-body">
-                            <input type="number" className="form-control" placeholder="Enter OTP"  onChange={obj=>pickcheckotp(obj.target.value)}/>
-                            <div className="row pt-4">
-                                <p className="col-7">Time Remaining :  {" "}
-                                    <span style={{fontWeight:600}}>
-                                    {minutes < 10 ? `0${minutes}` : minutes}:
-                                    {seconds < 10 ? `0${seconds}` : seconds}
-                                    </span> </p>
-                                <label className="col-5 text-danger text-decoration-underline"
-                                disabled={seconds > 0 || minutes > 0}  
-                                onClick={sendemail}> Resend OTP
-                                </label> 
+            <Modal show={showModal} onHide={() => setShowModal(false)} className="custom-modal" size="md" centered >
+                <Modal.Header closeButton>
+                    <Modal.Title className="ms-auto">Verify OTP</Modal.Title>
+                </Modal.Header>
 
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success m-auto" 
-                                        data-bs-dismiss= {(parseInt(otp) === parseInt(checkotp)) ?  "modal" : "" } 
-                                        onClick={update}>
-                                    SUBMIT
-                            </button>
-
-                        </div>
-
+                <Modal.Body>
+                    <div className="d-flex justify-content-center">
+                        <InputOtp value={checkotp} onChange={(e) => pickcheckotp(e.value)} className="p-inputtext p-component" />
                     </div>
-                </div>
-            </div>
+                    <div className="row pt-4 text-center">
+                        <p className="col-7">Time Remaining: {" "}
+                            <span style={{ fontWeight: 600 }}>
+                                {minutes < 10 ? `0${minutes}` : minutes}:
+                                {seconds < 10 ? `0${seconds}` : seconds}
+                            </span>
+                        </p>
+                        <label className="col-5 text-danger text-decoration-underline"
+                            disabled={seconds > 0 || minutes > 0}
+                            onClick={sendemail}> 
+                            Resend OTP
+                        </label>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button 
+                        variant="success" 
+                        onClick={update}
+                    >
+                        SUBMIT
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }
@@ -420,9 +459,3 @@ export default Myprofile;
 
 
 
-
-const login = () =>
-{
-    localStorage.setItem("userlogin", "true");
-    window.location.reload();
-}

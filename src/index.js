@@ -9,11 +9,13 @@ import './icon/css/all.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap/dist/css/bootstrap-grid.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { PrimeReactProvider } from 'primereact/api'; 
 import 'primereact/resources/themes/saga-blue/theme.css';  // Import PrimeReact theme
 import 'primereact/resources/primereact.min.css';           // Import PrimeReact core styles
-import 'primeicons/primeicons.css';       
+import 'primeicons/primeicons.css'; 
+import 'primereact/resources/themes/lara-light-indigo/theme.css';      
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

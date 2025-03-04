@@ -81,14 +81,9 @@ const Mydashboard = () => {
       </div>
 
       <div className="row">
-        <div className="col-12 col-sm-6 col-lg-3 mb-4">
-          <div className="shadow-lg rounded p-2">
-            <Productsoutofstock />
-          </div>
-        </div>
-        <div className="col-12 col-sm-6 col-lg-3 mb-4">
-          <div className="shadow-lg rounded p-2">
-            <Productinstock  />
+        <div className="col-12 col-lg-6 mb-4">
+          <div className="shadow-lg rounded">
+            <Productinstock />
           </div>
         </div>
         <div className="col-12 col-sm-6 col-lg-3 mb-4">
